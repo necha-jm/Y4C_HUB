@@ -1,0 +1,114 @@
+[
+  {
+    "id": "tech-skills",
+    "title": "Tech Skills Development",
+    "description": "A deep dive into modern web development, mobile app creation, and data science. This program is designed to equip participants with job-ready skills through hands-on projects and real-world problem-solving.",
+    "activities": [
+      {
+        "name": "Full-Stack Web Development",
+        "description": "Mastering React, Node.js, and databases."
+      },
+      {
+        "name": "Mobile App Development",
+        "description": "Building native apps for iOS and Android."
+      },
+      {
+        "name": "Data Science & Machine Learning",
+        "description": "Exploring data analysis, visualization, and AI models."
+      },
+      {
+        "name": "Final Capstone Project",
+        "description": "Developing a complete product from scratch."
+      }
+    ],
+    "images": [
+      "Students collaborating on code at a computer",
+      "A student presenting a mobile app prototype",
+      "A group of young people in a workshop setting"
+    ]
+  },
+  {
+    "id": "startup-incubation",
+    "title": "Startup Incubation",
+    "description": "From idea to launch, our incubation program provides the mentorship, resources, and network needed to build a successful startup. We focus on lean startup methodologies, product-market fit, and fundraising strategies.",
+    "activities": [
+      {
+        "name": "Idea Validation & Market Research",
+        "description": "Identifying and validating customer needs."
+      },
+      {
+        "name": "Business Model Canvas",
+        "description": "Structuring a scalable business model."
+      },
+      {
+        "name": "Pitching & Fundraising",
+        "description": "Crafting a compelling story for investors."
+      },
+      {
+        "name": "Networking with VCs",
+        "description": "Connecting with potential investors and partners."
+      }
+    ],
+    "images": [
+      "An entrepreneur pitching an idea to a panel of judges",
+      "A team brainstorming with sticky notes on a whiteboard",
+      "A person sketching out a business plan"
+    ]
+  },
+  {
+    "id": "leadership-training",
+    "title": "Leadership Training",
+    "description": "Develop essential leadership and soft skills to excel in any career path. This program covers communication, teamwork, project management, and ethical leadership.",
+    "activities": [
+      {
+        "name": "Effective Communication",
+        "description": "Public speaking and interpersonal skills."
+      },
+      {
+        "name": "Team Collaboration",
+        "description": "Leading and working in diverse teams."
+      },
+      {
+        "name": "Project Management Fundamentals",
+        "description": "From planning to execution."
+      },
+      {
+        "name": "Ethical Leadership",
+        "description": "Making responsible and impactful decisions."
+      }
+    ],
+    "images": [
+      "A person giving a presentation to a group",
+      "A team working together on a puzzle",
+      "A group of people in a seminar"
+    ]
+  },
+  {
+    "id": "mentorship-programs",
+    "title": "Mentorship Programs",
+    "description": "Connect with industry experts and experienced professionals for personalized guidance and career advice. Our mentors are dedicated to helping you navigate your professional journey.",
+    "activities": [
+      {
+        "name": "One-on-One Mentoring",
+        "description": "Personalized sessions with a dedicated mentor."
+      },
+      {
+        "name": "Group Mentoring Circles",
+        "description": "Peer-to-peer learning and support."
+      },
+      {
+        "name": "Industry Networking Events",
+        "description": "Meet professionals from various fields."
+      },
+      {
+        "name": "Career Path Planning",
+        "description": "Setting and achieving your career goals."
+      }
+    ],
+    "images": [
+      "Two people having a conversation at a coffee shop",
+      "A professional guiding a younger person at a computer",
+      "A group of people networking at an event"
+    ]
+  }
+]

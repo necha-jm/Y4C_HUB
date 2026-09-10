@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="y4c-graduation">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Images/y4c-graduation.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

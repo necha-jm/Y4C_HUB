@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1",
+    "name": "Super User",
+    "email": "superuser@y4c.com",
+    "password": "password123",
+    "role": "superuser"
+  },
+  {
+    "id": "2",
+    "name": "Facilitator User",
+    "email": "facilitator@y4c.com",
+    "password": "password123",
+    "role": "facilitator"
+  },
+  {
+    "id": "3",
+    "name": "Coordinator User",
+    "email": "coordinator@y4c.com",
+    "password": "password123",
+    "role": "coordinator"
+  },
+  {
+    "id": "4",
+    "name": "Normal Member",
+    "email": "member@y4c.com",
+    "password": "password123",
+    "role": "member"
+  },
+  {
+    "id": "5",
+    "name": "Guest User",
+    "email": "guest@y4c.com",
+    "password": "password123",
+    "role": "guest"
+  }
+]

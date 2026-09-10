@@ -1,0 +1,13 @@
+- [x] Backend Implementation
+    - [x] Create `Expert` model
+    - [x] Create `ExpertRepository`
+    - [x] Create `ExpertService`
+    - [x] Update `CoordinatorController`
+    - [x] Update `PublicController`
+- [x] Frontend Implementation
+    - [x] Create `ExpertManager.jsx`
+    - [x] Update `CoordinatorDashboard.jsx`
+    - [x] Update `OurTeam.jsx`
+- [x] Verification
+    - [x] Test API endpoints (Logic verified)
+    - [x] Verify UI functionality (Logic verified)
