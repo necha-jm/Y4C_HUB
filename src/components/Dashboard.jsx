@@ -48,9 +48,9 @@ const Dashboard = ({ onLogout }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 dark:bg-gray-950 transition-colors duration-500">
+    <div className="min-h-screen bg-slate-900 transition-colors duration-500 overflow-x-hidden">
       {/* Navbar */}
-      <nav className="h-24 bg-white/70 dark:bg-gray-900/80 backdrop-blur-2xl border-b border-gray-100 dark:border-gray-800 fixed top-0 left-0 right-0 z-50 px-12 flex items-center justify-between shadow-sm">
+      <nav className="h-24 bg-slate-950/50 backdrop-blur-2xl border-b border-white/5 fixed top-0 left-0 right-0 z-50 px-4 md:px-12 flex items-center justify-between shadow-2xl">
         <Link to="/">
           <Logo iconClassName="h-12 w-12" />
         </Link>
@@ -58,24 +58,24 @@ const Dashboard = ({ onLogout }) => {
         <div className="flex items-center gap-8">
           <button
             onClick={() => navigate('/')}
-            className="p-3 bg-gray-50 dark:bg-gray-800 rounded-2xl text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:shadow-inner group flex items-center gap-2"
+            className="p-3 bg-white/5 rounded-2xl text-gray-400 hover:text-udsm-blue transition-all duration-300 hover:shadow-inner group flex items-center gap-2"
           >
             <Home className="h-6 w-6 group-hover:-translate-y-0.5 transition-transform" />
             <span className="text-xs font-black uppercase tracking-widest hidden md:block">Main Site</span>
           </button>
 
-          <div className="h-10 w-[1px] bg-gray-200 dark:bg-gray-700" />
+          <div className="h-10 w-[1px] bg-white/10" />
 
-          <button className="relative p-3 bg-gray-50 dark:bg-gray-800 rounded-2xl text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:shadow-inner group">
+          <button className="relative p-3 bg-white/5 rounded-2xl text-gray-400 hover:text-udsm-blue transition-all duration-300 hover:shadow-inner group">
             <Bell className="h-6 w-6 group-hover:rotate-12 transition-transform" />
-            <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-gray-900 ring-4 ring-red-500/20" />
+            <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-slate-900 ring-4 ring-red-500/20" />
           </button>
 
-          <div className="h-10 w-[1px] bg-gray-200 dark:bg-gray-700" />
+          <div className="h-10 w-[1px] bg-white/10" />
 
           <div className="flex items-center gap-5">
             <div className="text-right hidden sm:block">
-              <p className="text-sm font-black text-gray-900 dark:text-white tracking-tight">{currentUser?.name}</p>
+              <p className="text-sm font-black text-white tracking-tight">{currentUser?.name}</p>
               <div className="flex items-center justify-end gap-1.5 mt-1">
                 <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse",
                   currentUser?.role?.toLowerCase() === 'superuser' ? 'bg-red-500' :
@@ -88,8 +88,8 @@ const Dashboard = ({ onLogout }) => {
             </div>
 
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
-              <div className="relative w-12 h-12 bg-white dark:bg-gray-800 rounded-2xl flex items-center justify-center border border-gray-100 dark:border-gray-700 shadow-xl overflow-hidden">
+              <div className="absolute -inset-1 bg-gradient-to-tr from-udsm-blue to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
+              <div className="relative w-12 h-12 bg-slate-800 rounded-2xl flex items-center justify-center border border-white/10 shadow-xl overflow-hidden">
                 {getRoleIcon()}
               </div>
             </div>
@@ -98,7 +98,7 @@ const Dashboard = ({ onLogout }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onLogout}
-              className="p-3 bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 rounded-2xl hover:bg-red-500 dark:hover:bg-red-500 hover:text-white transition-all duration-300 shadow-sm hover:shadow-red-200"
+              className="p-3 bg-red-500/10 text-red-500 rounded-2xl hover:bg-red-500 hover:text-white transition-all duration-300 shadow-sm hover:shadow-red-500/20"
             >
               <LogOut className="h-6 w-6" />
             </motion.button>

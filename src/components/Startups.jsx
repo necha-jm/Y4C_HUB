@@ -19,7 +19,7 @@ const Startups = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white tracking-tight"
+            className="text-4xl md:text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white tracking-tight"
           >
             Success <span className="bg-gradient-to-r from-udsm-blue to-forest-green bg-clip-text text-transparent">Stories</span>
           </motion.h2>

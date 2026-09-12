@@ -127,12 +127,15 @@ const Footer = () => {
           <motion.div variants={itemVariants} className="space-y-6">
             <h4 className="text-lg font-black uppercase tracking-widest text-udsm-gold">Contact Info</h4>
             <div className="space-y-4 text-sm">
-                <div className="flex items-center gap-3 text-gray-400 group cursor-pointer hover:text-white transition-colors">
+                <a
+                  href="mailto:y4c@udsm.ac.tz"
+                  className="flex items-center gap-3 text-gray-400 group cursor-pointer hover:text-white transition-colors"
+                >
                   <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-udsm-blue/20 group-hover:border-udsm-blue/50 transition-all">
                     <ExternalLink className="h-4 w-4" />
                   </div>
                   <p>y4c@udsm.ac.tz</p>
-                </div>
+                </a>
                 <p className="text-gray-400 leading-relaxed pl-11">
                   Room B208, Block B, UDSM - CoICT Kijitonyama Campus
                 </p>

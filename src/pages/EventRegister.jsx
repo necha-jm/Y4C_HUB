@@ -43,31 +43,31 @@ const EventRegister = () => {
         <meta name="description" content={`Register for the ${event.title} at Y4C Innovation Lab.`} />
       </Helmet>
       <Header />
-      <main className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      <main className="bg-slate-50 dark:bg-gray-950 pt-48 lg:pt-64">
         <Breadcrumbs />
         <div className="container mx-auto px-4 pb-16">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <div className="max-w-2xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-2xl">
-              <h1 className="text-3xl lg:text-4xl font-bold text-udsm-blue mb-2">Register for {event.title}</h1>
-              <p className="text-gray-600 mb-8">Fill out the form below to secure your spot.</p>
+            <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 p-8 md:p-12 rounded-[2rem] shadow-2xl border border-gray-100 dark:border-gray-800">
+              <h1 className="text-3xl lg:text-4xl font-black text-udsm-blue dark:text-white mb-2 tracking-tight">Register for {event.title}</h1>
+              <p className="text-gray-600 dark:text-gray-400 mb-8 font-medium">Fill out the form below to secure your spot.</p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
-                  <Input name="fullName" type="text" placeholder="Full Name" required className="bg-gray-50 p-6 rounded-lg" />
-                  <Input name="email" type="email" placeholder="Email Address" required className="bg-gray-50 p-6 rounded-lg" />
+                  <Input name="fullName" type="text" placeholder="Full Name" required className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-xl border-gray-100 dark:border-gray-700 font-bold" />
+                  <Input name="email" type="email" placeholder="Email Address" required className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-xl border-gray-100 dark:border-gray-700 font-bold" />
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
-                  <Input name="phone" type="tel" placeholder="Phone Number" required className="bg-gray-50 p-6 rounded-lg" />
-                  <Input name="organization" type="text" placeholder="Organization/Institution" className="bg-gray-50 p-6 rounded-lg" />
+                  <Input name="phone" type="tel" placeholder="Phone Number" required className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-xl border-gray-100 dark:border-gray-700 font-bold" />
+                  <Input name="organization" type="text" placeholder="Organization/Institution" className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-xl border-gray-100 dark:border-gray-700 font-bold" />
                 </div>
                 <div>
-                  <select name="isStudent" required className="w-full bg-gray-50 p-6 rounded-lg border border-input text-gray-500">
+                  <select name="isStudent" required className="w-full bg-gray-50 dark:bg-gray-800/50 p-6 rounded-xl border border-input text-gray-500 font-bold outline-none focus:ring-2 focus:ring-udsm-blue">
                     <option value="" disabled selected>Are you a student?</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                   </select>
                 </div>
-                <Button type="submit" size="lg" className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white p-6">
+                <Button type="submit" size="lg" className="w-full h-16 bg-gradient-to-r from-udsm-blue via-forest-green to-udsm-gold hover:scale-[1.02] transition-all text-white font-black uppercase tracking-widest rounded-xl shadow-xl shadow-udsm-blue/20">
                   Complete Registration
                 </Button>
               </form>

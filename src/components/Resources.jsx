@@ -20,7 +20,7 @@ const Resources = () => {
       <div className="container mx-auto relative z-10">
         <div className="text-center max-w-4xl mx-auto mb-24 space-y-6">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="space-y-4">
-            <h2 className="text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white tracking-tight">Resources & <span className="bg-gradient-to-r from-udsm-blue to-forest-green bg-clip-text text-transparent">Learning</span></h2>
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white tracking-tight">Resources & <span className="bg-gradient-to-r from-udsm-blue to-blue-600 bg-clip-text text-transparent">Learning</span></h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 font-medium">Access our extensive library of resources designed to accelerate your learning journey.</p>
           </motion.div>
         </div>

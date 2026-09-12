@@ -10,7 +10,7 @@ import AchievementOrbit from './member/AchievementOrbit';
 
 const MemberDashboard = ({ user }) => {
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       {/* Hello Section */}
       <div className="flex flex-col lg:flex-row gap-8 mb-10">
         <motion.div

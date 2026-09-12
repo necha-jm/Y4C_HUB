@@ -10,6 +10,7 @@ import Resources from '@/components/Resources';
 import Startups from '@/components/Startups';
 import Collaboration from '@/components/Collaboration';
 import Impact from '@/components/Impact';
+import Partners from '@/components/Partners';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import Login from '@/components/Login';
@@ -39,6 +40,7 @@ const MainLayout = ({ onLoginClick, isAuthenticated }) => (
       <main className="flex-grow">
         <Hero />
         <About />
+        <Partners />
         <Programs />
         <Events />
         <Resources />

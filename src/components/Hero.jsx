@@ -65,7 +65,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative h-screen min-h-[700px] w-full flex items-center justify-center overflow-hidden bg-gray-900 pt-[150px] md:pt-[250px]">
+    <section id="home" className="relative h-screen min-h-[600px] w-full flex items-center justify-center overflow-hidden bg-gray-900 pt-[100px] md:pt-[140px]">
       {/* Background Image with AnimatePresence for smooth cross-fade */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence initial={false}>
@@ -83,7 +83,7 @@ const Hero = () => {
               className="w-full h-full object-cover scale-105"
             />
             {/* Multi-layered Premium Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80" />
             <div className="absolute inset-0 bg-udsm-blue/10 mix-blend-overlay" />
           </motion.div>
         </AnimatePresence>
@@ -140,21 +140,34 @@ const Hero = () => {
               visible: { opacity: 1 }
             }}
           >
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase mb-4 drop-shadow-2xl flex flex-wrap justify-center gap-x-4 md:gap-x-8">
-              {titleWords.map((word, i) => (
+            <h1 className="text-lg md:text-2xl lg:text-3xl font-black text-white tracking-[0.2em] uppercase mb-1 drop-shadow-2xl flex flex-wrap justify-center gap-x-4 md:gap-x-6">
+              {titleWords.slice(0, 3).map((word, i) => (
                 <motion.span
                   key={i}
                   variants={{
-                    hidden: { opacity: 0, y: 100, rotateX: -90 },
-                    visible: { opacity: 1, y: 0, rotateX: 0 }
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
+                  className="inline-block"
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </h1>
+            <h1 className="text-2xl md:text-5xl lg:text-7xl font-black text-udsm-gold tracking-tighter uppercase mb-4 drop-shadow-2xl flex flex-wrap justify-center gap-x-4 md:gap-x-8">
+              {titleWords.slice(3).map((word, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.9 },
+                    visible: { opacity: 1, scale: 1 }
                   }}
                   transition={{
                     duration: 0.8,
-                    delay: i * 0.1,
                     type: "spring",
                     stiffness: 100
                   }}
-                  className={cn("inline-block", (word === 'OF' || word === 'Innovation') && "text-udsm-gold")}
+                  className="inline-block"
                 >
                   {word}
                 </motion.span>
@@ -199,21 +212,21 @@ const Hero = () => {
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 }
             }}
-            className="flex flex-wrap justify-center gap-6 pt-10"
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-10"
           >
             <Button
               onClick={() => scrollToSection('programs')}
               size="lg"
-              className="bg-gradient-to-r from-udsm-blue to-forest-green hover:scale-105 text-white shadow-2xl px-10 py-8 text-xl font-bold rounded-2xl group transition-all"
+              className="w-full sm:w-auto bg-udsm-blue hover:bg-blue-700 text-white shadow-[0_10px_30px_rgba(8,100,175,0.2)] px-10 py-7 text-lg font-black rounded-2xl group transition-all uppercase tracking-widest"
             >
               Explore Programs
-              <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
             </Button>
             <Button
               onClick={() => navigate('/propose')}
               size="lg"
               variant="outline"
-              className="border-2 border-white text-white hover:bg-white hover:text-udsm-blue px-10 py-8 text-xl font-bold rounded-2xl transition-all shadow-lg backdrop-blur-md bg-white/10"
+              className="w-full sm:w-auto border-2 border-udsm-gold text-udsm-gold hover:bg-udsm-gold hover:text-black px-10 py-7 text-lg font-black rounded-2xl transition-all shadow-lg backdrop-blur-md bg-udsm-gold/5 uppercase tracking-widest"
             >
               Propose a Project
             </Button>
@@ -235,24 +248,6 @@ const Hero = () => {
           className="w-1 h-10 bg-gradient-to-b from-white/50 to-transparent rounded-full"
         />
       </motion.div>
-
-      {/* Floating Decorative Elements */}
-      <motion.div
-        animate={{
-          y: [0, -20, 0],
-          rotate: [0, 10, 0]
-        }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-10 left-10 w-24 h-24 border-2 border-white/20 rounded-3xl hidden md:block"
-      />
-      <motion.div
-        animate={{
-          y: [0, 20, 0],
-          rotate: [0, -10, 0]
-        }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-32 right-10 w-16 h-16 bg-udsm-gold/20 backdrop-blur-xl rounded-full hidden md:block"
-      />
     </section>
   );
 };

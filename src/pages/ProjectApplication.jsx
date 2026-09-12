@@ -89,14 +89,14 @@ const ProjectApplication = () => {
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col">
       <Header />
 
-      <main className="flex-grow pt-32 pb-20 px-4">
+      <main className="flex-grow pt-48 lg:pt-64 pb-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h1 className="text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white tracking-tight mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white tracking-tight mb-6">
               Propose Your <span className="bg-gradient-to-r from-udsm-blue to-forest-green bg-clip-text text-transparent">Innovation</span>
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed">

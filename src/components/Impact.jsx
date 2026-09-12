@@ -47,7 +47,7 @@ const Impact = () => {
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <h2 className="text-5xl lg:text-7xl font-black text-white tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-white tracking-tight">
               Our <span className="bg-gradient-to-r from-udsm-blue via-udsm-gold to-forest-green bg-clip-text text-transparent">Impact</span>
             </h2>
             <p className="text-xl text-gray-400 font-medium leading-relaxed">

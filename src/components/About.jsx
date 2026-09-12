@@ -21,7 +21,7 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white tracking-tight"
+            className="text-4xl md:text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white tracking-tight"
           >
             About the <span className="bg-gradient-to-r from-udsm-blue via-forest-green to-udsm-gold bg-clip-text text-transparent italic">Lab</span>
           </motion.h2>

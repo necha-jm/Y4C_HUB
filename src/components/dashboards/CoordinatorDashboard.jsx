@@ -283,7 +283,7 @@ const CoordinatorDashboard = ({ user }) => {
   };
 
   return (
-    <div className="p-8 bg-blue-50/30 min-h-screen">
+    <div className="p-4 md:p-8 bg-blue-50/30 min-h-screen">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
         <motion.div
           initial={{ opacity: 0, x: -30 }}

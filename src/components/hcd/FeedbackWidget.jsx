@@ -64,7 +64,7 @@ const FeedbackWidget = () => {
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             className="bg-white dark:bg-gray-950 border border-gray-100 dark:border-gray-800 rounded-[2.5rem] shadow-2xl w-[400px] mb-4 overflow-hidden flex flex-col"
           >
-            <div className="p-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex justify-between items-center">
+            <div className="p-8 bg-gradient-to-r from-udsm-blue via-forest-green to-udsm-gold text-white flex justify-between items-center">
               <div>
                 <h3 className="text-xl font-black italic uppercase tracking-tighter">HCD Lab Feedback</h3>
                 <p className="text-[10px] font-bold opacity-80 uppercase tracking-widest">Help us improve your experience</p>
@@ -81,10 +81,10 @@ const FeedbackWidget = () => {
                     <button
                       key={cat.id}
                       onClick={() => { setFeedback({...feedback, category: cat.id}); setStatus('details'); }}
-                      className="p-4 rounded-2xl border-2 border-gray-50 dark:border-gray-900 hover:border-blue-500 hover:bg-blue-50/50 transition-all flex flex-col items-center gap-2 group text-center"
+                      className="p-4 rounded-2xl border-2 border-gray-50 dark:border-gray-900 hover:border-udsm-blue hover:bg-udsm-blue/5 transition-all flex flex-col items-center gap-2 group text-center"
                     >
-                      <cat.icon className="h-6 w-6 text-gray-400 group-hover:text-blue-600 transition-colors" />
-                      <span className="text-xs font-black uppercase text-gray-600 dark:text-gray-400 group-hover:text-blue-600">{cat.label}</span>
+                      <cat.icon className="h-6 w-6 text-gray-400 group-hover:text-udsm-blue transition-colors" />
+                      <span className="text-xs font-black uppercase text-gray-600 dark:text-gray-400 group-hover:text-udsm-blue">{cat.label}</span>
                     </button>
                   ))}
                 </div>
@@ -114,18 +114,18 @@ const FeedbackWidget = () => {
                       ))}
                     </div>
                   </div>
-                  <Button onClick={handleSubmit} className="w-full h-12 bg-blue-600 rounded-xl font-bold gap-2">
+                  <Button onClick={handleSubmit} className="w-full h-12 bg-udsm-blue hover:bg-blue-700 text-white rounded-xl font-bold gap-2">
                     <Send className="h-4 w-4" />
                     Submit Feedback
                   </Button>
-                  <button onClick={() => setStatus('category')} className="w-full text-xs font-bold text-gray-400 uppercase hover:text-blue-600 transition-colors mt-2">Back</button>
+                  <button onClick={() => setStatus('category')} className="w-full text-xs font-bold text-gray-400 uppercase hover:text-udsm-blue transition-colors mt-2">Back</button>
                 </div>
               )}
             </div>
 
             <div className="px-8 py-4 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-100 dark:border-gray-800 text-[10px] text-gray-400 flex items-center gap-2">
               <AlertCircle className="h-3 w-3" />
-              Reporting issue on: <span className="font-black text-blue-500">{window.location.pathname}</span>
+              Reporting issue on: <span className="font-black text-udsm-blue">{window.location.pathname}</span>
             </div>
           </motion.div>
         )}
@@ -135,7 +135,7 @@ const FeedbackWidget = () => {
         whileHover={{ scale: 1.1, rotate: 5 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-16 h-16 bg-blue-600 text-white rounded-full shadow-2xl flex items-center justify-center relative overflow-hidden group"
+        className="w-16 h-16 bg-udsm-blue text-white rounded-full shadow-2xl flex items-center justify-center relative overflow-hidden group"
       >
         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
         <MessageSquare className="h-8 w-8" />

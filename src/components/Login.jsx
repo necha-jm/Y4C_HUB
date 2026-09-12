@@ -92,9 +92,9 @@ const Login = ({ onLogin, onClose }) => {
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-        className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-2xl rounded-[3rem] shadow-2xl max-w-xl w-full relative overflow-hidden border border-white/20 dark:border-gray-800 my-auto"
+        className="bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl rounded-[3rem] shadow-2xl max-w-xl w-full relative overflow-hidden border border-white/20 dark:border-gray-800 my-auto"
       >
-        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600" />
+        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-udsm-blue via-forest-green to-udsm-gold" />
 
         <button
           onClick={onClose}
@@ -151,7 +151,7 @@ const Login = ({ onLogin, onClose }) => {
                       <div className="relative">
                         <select
                           required
-                          className="w-full rounded-2xl h-14 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 text-lg font-bold px-12 outline-none focus:ring-2 focus:ring-blue-500 dark:text-white appearance-none cursor-pointer"
+                          className="w-full rounded-2xl h-14 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 text-lg font-bold px-12 outline-none focus:ring-2 focus:ring-udsm-blue dark:text-white appearance-none cursor-pointer"
                           value={formData.role}
                           onChange={(e) => setFormData({ ...formData, role: e.target.value, isStudent: false })}
                         >
@@ -161,7 +161,7 @@ const Login = ({ onLogin, onClose }) => {
                             </option>
                           ))}
                         </select>
-                        <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-blue-500" />
+                        <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-udsm-blue" />
                       </div>
                     </div>
 
@@ -201,7 +201,7 @@ const Login = ({ onLogin, onClose }) => {
                           <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Year</label>
                           <select
                             required
-                            className="w-full rounded-xl h-12 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 font-bold px-4 outline-none focus:ring-2 focus:ring-blue-500 dark:text-white"
+                            className="w-full rounded-xl h-12 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 font-bold px-4 outline-none focus:ring-2 focus:ring-udsm-blue dark:text-white"
                             value={formData.yearOfStudy}
                             onChange={(e) => setFormData({ ...formData, yearOfStudy: e.target.value })}
                           >
@@ -218,7 +218,7 @@ const Login = ({ onLogin, onClose }) => {
                           <input
                             type="checkbox"
                             id="isStudent"
-                            className="w-5 h-5 rounded-lg border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                            className="w-5 h-5 rounded-lg border-gray-300 text-udsm-blue focus:ring-udsm-blue cursor-pointer"
                             checked={formData.isStudent}
                             onChange={(e) => setFormData({ ...formData, isStudent: e.target.checked })}
                           />
@@ -282,7 +282,7 @@ const Login = ({ onLogin, onClose }) => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-udsm-blue transition-colors"
                   >
                     {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
@@ -306,7 +306,7 @@ const Login = ({ onLogin, onClose }) => {
 
             {!isSignup && (
               <div className="flex justify-end px-1">
-                <button type="button" className="text-[10px] font-black text-blue-600 hover:text-blue-700 uppercase tracking-widest transition-colors">
+                <button type="button" className="text-[10px] font-black text-udsm-blue hover:text-udsm-gold uppercase tracking-widest transition-colors">
                   Forgot Password?
                 </button>
               </div>
@@ -315,7 +315,7 @@ const Login = ({ onLogin, onClose }) => {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full h-16 rounded-[1.5rem] bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-blue-500/20 text-xl font-black transition-all mt-4"
+              className="w-full h-16 rounded-[1.5rem] bg-gradient-to-r from-udsm-blue via-forest-green to-udsm-gold hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-udsm-blue/20 text-xl font-black transition-all mt-4"
             >
               {isLoading ? (
                 <div className="flex items-center gap-3">
@@ -337,10 +337,10 @@ const Login = ({ onLogin, onClose }) => {
                 setIsSignup(!isSignup);
                 setFormData({ email: '', password: '', confirmPassword: '', name: '', role: 'member', isStudent: false, registrationNumber: '', program: '', yearOfStudy: '', university: '' });
               }}
-              className="group text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-black tracking-widest uppercase text-[10px] transition-colors flex items-center justify-center gap-2 mx-auto"
+              className="group text-gray-500 dark:text-gray-400 hover:text-udsm-blue dark:hover:text-udsm-gold font-black tracking-widest uppercase text-[10px] transition-colors flex items-center justify-center gap-2 mx-auto"
             >
               {isSignup ? 'Already have an account?' : "Don't have an account?"}
-              <span className="text-blue-600 group-hover:underline">{isSignup ? 'Login Now' : 'Join Y4C Lab'}</span>
+              <span className="text-udsm-blue group-hover:underline">{isSignup ? 'Login Now' : 'Join Y4C Lab'}</span>
             </button>
           </div>
         </div>

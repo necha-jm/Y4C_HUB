@@ -40,7 +40,7 @@ const Logo = ({ className, iconClassName, textClassName, showText = true }) => {
           }}
         >
           <img
-            src="/Images/youth_for_children_logo.png"
+            src="/Images/y4c_logo.png"
             alt="Y4C Innovation Lab"
             className="w-full h-full object-contain scale-110"
           />

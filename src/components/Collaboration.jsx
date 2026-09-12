@@ -27,7 +27,7 @@ const Collaboration = () => {
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <h2 className="text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white tracking-tight">
               Collaboration & <span className="bg-gradient-to-r from-udsm-blue to-forest-green bg-clip-text text-transparent">Opportunities</span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 font-medium leading-relaxed">
