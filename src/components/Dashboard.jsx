@@ -49,7 +49,9 @@ const Dashboard = ({ onLogout }) => {
 
   const isPremiumDashboard = currentUser?.role?.toLowerCase() === 'coordinator' ||
                              currentUser?.role?.toLowerCase() === 'facilitator' ||
-                             currentUser?.role?.toLowerCase() === 'member';
+                             currentUser?.role?.toLowerCase() === 'member' ||
+                             currentUser?.role?.toLowerCase() === 'guest' ||
+                             currentUser?.role?.toLowerCase() === 'superuser';
 
   return (
     <div className="min-h-screen bg-slate-900 transition-colors duration-500 overflow-x-hidden">

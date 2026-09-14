@@ -16,7 +16,7 @@ const Hero = () => {
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
   const [heroContent, setHeroContent] = useState({
-    title: 'THE HUB OF HUBS',
+    title: 'YOUTH FOR CHILDREN INNOVATION LAB',
     subtitle: 'Nurturing ideas, sharing solutions, and building the future. A space where young minds transform communities through Open Innovation.',
     image: "/Images/Photo05.png"
   });
@@ -26,6 +26,18 @@ const Hero = () => {
   useEffect(() => {
     const fetchHeroContent = async () => {
       try {
+        // Try Active Project first
+        const projectRes = await apiClient.get('/public/active-project');
+        if (projectRes.data) {
+          const p = projectRes.data;
+          setHeroContent({
+            title: p.title || 'YOUTH FOR CHILDREN INNOVATION LAB',
+            subtitle: p.subtitle || 'Nurturing ideas, sharing solutions, and building the future. A space where young minds transform communities through Open Innovation.',
+            image: p.heroImageUrl || "/Images/Photo05.png"
+          });
+          return;
+        }
+
         const response = await apiClient.get('/public/content');
         if (response.data && Array.isArray(response.data)) {
           const content = {};
@@ -154,7 +166,7 @@ const Hero = () => {
                 </motion.span>
               ))}
             </h1>
-            <h1 className="text-2xl md:text-5xl lg:text-7xl font-black text-udsm-gold tracking-tighter uppercase mb-4 drop-shadow-2xl flex flex-wrap justify-center gap-x-4 md:gap-x-8">
+            <h1 className="text-4xl md:text-6xl lg:text-8xl font-black text-udsm-gold tracking-tighter uppercase mb-4 drop-shadow-2xl flex flex-wrap justify-center gap-x-4 md:gap-x-8">
               {titleWords.slice(3).map((word, i) => (
                 <motion.span
                   key={i}
