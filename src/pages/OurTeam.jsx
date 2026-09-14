@@ -22,6 +22,10 @@ const TeamMember = ({
           className="w-full h-full rounded-2xl object-cover shadow-inner"
           alt={`Photo of ${name}`}
           src={profilePicture || "/Images/y4c-graduation/IMG_0008.JPG"}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "/Images/y4c-graduation/IMG_0008.JPG";
+          }}
         />
       </motion.div>
       <p className="font-black text-gray-900 dark:text-white text-lg tracking-tight group-hover:text-udsm-blue transition-colors">{name}</p>

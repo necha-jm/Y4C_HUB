@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, UserPlus, Trash2, Edit, Save, X, Upload, ChevronDown } from 'lucide-react';
+import { Users, UserPlus, Trash2, Edit, Save, X, Upload, ChevronDown, TrendingUp } from 'lucide-react';
 import apiClient from '@/core/apiClient';
 import { toast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
@@ -41,6 +41,10 @@ const ExpertManager = () => {
     const file = e.target.files[0];
     if (!file) return;
 
+    // Show temporary local preview while uploading
+    const localPreview = URL.createObjectURL(file);
+    setFormData(prev => ({ ...prev, profilePicture: localPreview }));
+
     const data = new FormData();
     data.append('file', file);
 
@@ -48,10 +52,12 @@ const ExpertManager = () => {
       const response = await apiClient.post('/upload', data, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-      setFormData({ ...formData, profilePicture: response.data });
+      // Replace local preview with real server path
+      setFormData(prev => ({ ...prev, profilePicture: response.data }));
       toast({ title: "Success", description: "Image uploaded successfully" });
     } catch (error) {
       toast({ title: "Error", description: "Failed to upload image", variant: "destructive" });
+      setFormData(prev => ({ ...prev, profilePicture: '' }));
     }
   };
 
@@ -102,116 +108,163 @@ const ExpertManager = () => {
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-black text-gray-900 flex items-center gap-3">
-          <Users className="h-6 w-6 text-indigo-600" />
-          Expert Management
+        <h2 className="text-2xl font-black text-gray-900 dark:text-white flex items-center gap-3 tracking-tighter">
+          <Users className="h-6 w-6 text-udsm-blue" />
+          Expert Ecosystem
         </h2>
-        <Button onClick={() => { setShowForm(true); setEditingId(null); setFormData({ name: '', title: '', bio: '', profilePicture: '', displayOrder: 0, parentId: null }); }} className="bg-indigo-600 hover:bg-indigo-700 gap-2 rounded-xl font-bold">
-          <UserPlus className="h-4 w-4" /> Add Expert
+        <Button onClick={() => { setShowForm(true); setEditingId(null); setFormData({ name: '', title: '', bio: '', profilePicture: '', displayOrder: 0, parentId: null }); }} className="bg-udsm-blue hover:bg-blue-700 gap-2 rounded-xl font-black uppercase tracking-widest text-xs h-12">
+          <UserPlus className="h-4 w-4" /> Add New Expert
         </Button>
       </div>
 
       <AnimatePresence>
         {showForm && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="bg-indigo-50 p-8 rounded-3xl border border-indigo-100 relative mb-8"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="bg-udsm-blue/5 dark:bg-gray-900/50 p-10 rounded-[2.5rem] border border-udsm-blue/10 relative mb-8 shadow-xl"
           >
-            <button onClick={() => setShowForm(false)} className="absolute top-6 right-6 text-indigo-400 hover:text-indigo-600">
-              <X className="h-6 w-6" />
+            <button onClick={() => setShowForm(false)} className="absolute top-8 right-8 text-udsm-blue/40 hover:text-udsm-blue transition-colors">
+              <X className="h-7 w-7" />
             </button>
-            <h3 className="text-xl font-bold text-indigo-900 mb-6">{editingId ? 'Edit Expert' : 'Register New Expert'}</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <Input required placeholder="Full Name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="rounded-xl" />
-                <Input required placeholder="Professional Title" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} className="rounded-xl" />
+            <h3 className="text-2xl font-black text-udsm-blue mb-8 tracking-tight">{editingId ? 'Edit Profile' : 'Register New Expert'}</h3>
+
+            <div className="flex flex-col items-center mb-10">
+              <div className="relative group">
+                <div className="w-40 h-40 rounded-[3rem] bg-white dark:bg-gray-800 shadow-2xl overflow-hidden border-4 border-white dark:border-gray-950 relative z-10 group-hover:scale-105 transition-transform duration-500">
+                  {formData.profilePicture ? (
+                    <img
+                      src={formData.profilePicture}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "/Images/y4c-graduation/IMG_0008.JPG";
+                      }}
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-udsm-blue/5 flex items-center justify-center text-udsm-blue/20">
+                      <Users className="h-16 w-16" />
+                    </div>
+                  )}
+
+                  {/* Upload Overlay */}
+                  <label htmlFor="expert-pic-upload" className="absolute inset-0 bg-udsm-blue/60 backdrop-blur-sm flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer z-20">
+                    <Upload className="text-white h-8 w-8 mb-2" />
+                    <span className="text-[10px] font-black text-white uppercase tracking-widest">Update Photo</span>
+                  </label>
+                </div>
+
+                {/* Decorative Ring */}
+                <div className="absolute -inset-3 bg-gradient-to-tr from-udsm-blue to-udsm-gold rounded-[3.5rem] opacity-20 group-hover:opacity-40 transition-opacity animate-pulse" />
               </div>
-              <textarea
-                placeholder="Bio/Description"
-                value={formData.bio}
-                onChange={(e) => setFormData({...formData, bio: e.target.value})}
-                className="w-full rounded-xl border-gray-200 p-3 min-h-[100px] focus:ring-indigo-500 focus:border-indigo-500"
-              />
-              <div className="grid md:grid-cols-3 gap-4 items-end">
+              <Input type="file" onChange={handleFileUpload} className="hidden" id="expert-pic-upload" accept="image/*" />
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="text-xs font-bold text-indigo-900 mb-1 block">Display Order</label>
-                  <Input type="number" placeholder="Order" value={formData.displayOrder} onChange={(e) => setFormData({...formData, displayOrder: parseInt(e.target.value)})} className="rounded-xl" />
+                  <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 block ml-2">Full Name</label>
+                  <Input required placeholder="e.g. Dr. Jane Doe" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="rounded-2xl h-14 bg-white dark:bg-gray-950 border-gray-100 dark:border-gray-800 font-bold" />
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-indigo-900 mb-1 block">Report To (Parent Expert)</label>
+                  <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 block ml-2">Professional Title</label>
+                  <Input required placeholder="e.g. Senior Researcher" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} className="rounded-2xl h-14 bg-white dark:bg-gray-950 border-gray-100 dark:border-gray-800 font-bold" />
+                </div>
+              </div>
+              <div>
+                <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 block ml-2">Biography & Expertise</label>
+                <textarea
+                  placeholder="Tell us about this expert's background..."
+                  value={formData.bio}
+                  onChange={(e) => setFormData({...formData, bio: e.target.value})}
+                  className="w-full rounded-3xl border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950 p-5 min-h-[120px] focus:ring-2 focus:ring-udsm-blue outline-none font-medium text-gray-700 dark:text-gray-300 transition-all"
+                />
+              </div>
+              <div className="grid md:grid-cols-2 gap-6 items-end">
+                <div>
+                  <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 block ml-2">Display Hierarchy Order</label>
+                  <Input type="number" placeholder="0" value={formData.displayOrder} onChange={(e) => setFormData({...formData, displayOrder: parseInt(e.target.value)})} className="rounded-2xl h-14 bg-white dark:bg-gray-950 border-gray-100 dark:border-gray-800 font-bold" />
+                </div>
+                <div>
+                  <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 block ml-2">Direct Supervisor (Optional)</label>
                   <select
-                    className="w-full rounded-xl border-gray-200 p-2.5 bg-white text-sm"
+                    className="w-full rounded-2xl h-14 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950 px-5 font-bold text-sm outline-none focus:ring-2 focus:ring-udsm-blue appearance-none cursor-pointer text-gray-700 dark:text-gray-300"
                     value={formData.parentId || ''}
                     onChange={(e) => setFormData({...formData, parentId: e.target.value ? parseInt(e.target.value) : null})}
                   >
-                    <option value="">None (Top Level)</option>
+                    <option value="">No Supervisor (Top Level)</option>
                     {experts.filter(e => e.id !== editingId).map(exp => (
                       <option key={exp.id} value={exp.id}>{exp.name}</option>
                     ))}
                   </select>
                 </div>
-                <div className="relative">
-                  <Input type="file" onChange={handleFileUpload} className="hidden" id="expert-pic-upload" accept="image/*" />
-                  <label htmlFor="expert-pic-upload" className="flex items-center justify-center gap-2 w-full p-2.5 border-2 border-dashed border-indigo-300 rounded-xl cursor-pointer hover:bg-indigo-100 transition-colors text-indigo-600 font-bold text-sm">
-                    <Upload className="h-4 w-4" /> {formData.profilePicture ? 'Change Picture' : 'Upload Picture'}
-                  </label>
-                </div>
               </div>
-              {formData.profilePicture && (
-                <div className="flex items-center gap-4 bg-white p-3 rounded-2xl border border-indigo-100">
-                  <img src={formData.profilePicture} alt="Preview" className="w-12 h-12 rounded-lg object-cover" />
-                  <span className="text-xs text-gray-500 truncate max-w-[200px]">{formData.profilePicture}</span>
-                </div>
-              )}
-              <Button type="submit" className="w-full bg-indigo-600 rounded-xl font-black py-6 text-lg">{editingId ? 'Update Expert' : 'Register Expert'}</Button>
+              <Button type="submit" className="w-full bg-udsm-blue hover:bg-blue-700 text-white rounded-2xl font-black py-8 text-lg shadow-xl shadow-blue-500/20 uppercase tracking-[0.2em] transition-all hover:scale-[1.01] active:scale-[0.98]">
+                {editingId ? 'Save Profile Changes' : 'Confirm Expert Registration'}
+              </Button>
             </form>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className="grid gap-4">
+      <div className="grid gap-6">
         {isLoading ? (
-          <div className="text-center py-12"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div></div>
+          <div className="text-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-udsm-blue mx-auto"></div>
+            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-4">Loading Experts...</p>
+          </div>
         ) : experts.length === 0 ? (
-          <div className="bg-white p-12 rounded-[2rem] text-center border-2 border-dashed border-gray-100">
-            <p className="text-gray-400 font-bold">No experts registered yet.</p>
+          <div className="bg-white dark:bg-gray-900/50 p-20 rounded-[3rem] text-center border-2 border-dashed border-gray-100 dark:border-gray-800">
+            <Users className="h-12 w-12 text-gray-200 mx-auto mb-4" />
+            <p className="text-gray-400 font-black uppercase tracking-widest text-xs">No experts found in the ecosystem.</p>
           </div>
         ) : (
           experts.map(exp => (
-            <motion.div key={exp.id} layout className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between group hover:shadow-md transition-shadow">
+            <motion.div key={exp.id} layout className="bg-white dark:bg-gray-900/50 p-6 rounded-3xl shadow-sm border border-gray-50 dark:border-gray-800 flex items-center justify-between group hover:shadow-xl hover:border-udsm-blue/20 transition-all duration-500">
               <div className="flex items-center gap-6">
                 <div className="relative">
                   {exp.profilePicture ? (
-                    <img src={exp.profilePicture} alt={exp.name} className="w-16 h-16 rounded-2xl object-cover shadow-md" />
+                    <img
+                      src={exp.profilePicture}
+                      alt={exp.name}
+                      className="w-20 h-20 rounded-[1.8rem] object-cover shadow-lg border-2 border-white dark:border-gray-800 group-hover:scale-105 transition-transform"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "/Images/y4c-graduation/IMG_0008.JPG";
+                      }}
+                    />
                   ) : (
-                    <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center text-indigo-600 font-black text-2xl">
+                    <div className="w-20 h-20 bg-udsm-blue/5 rounded-[1.8rem] flex items-center justify-center text-udsm-blue font-black text-3xl">
                       {exp.name.charAt(0)}
                     </div>
                   )}
                   {exp.parentId && (
-                    <div className="absolute -top-2 -left-2 bg-indigo-600 text-white p-1 rounded-full shadow-lg">
-                      <ChevronDown className="h-3 w-3 rotate-180" />
+                    <div className="absolute -top-2 -left-2 bg-udsm-gold text-white p-1.5 rounded-xl shadow-lg border-2 border-white dark:border-gray-900">
+                      <TrendingUp className="h-3 w-3" />
                     </div>
                   )}
                 </div>
                 <div>
-                  <div className="flex items-center gap-2">
-                    <p className="font-black text-gray-900 text-lg">{exp.name}</p>
-                    <span className="px-2 py-0.5 bg-gray-100 text-[10px] font-bold text-gray-500 rounded-full">#{exp.displayOrder}</span>
+                  <div className="flex items-center gap-3">
+                    <p className="font-black text-gray-900 dark:text-white text-xl tracking-tight leading-tight">{exp.name}</p>
+                    <span className="bg-gray-100 dark:bg-gray-800 text-[9px] font-black text-gray-500 px-3 py-1 rounded-full uppercase tracking-widest shadow-inner">Order: {exp.displayOrder}</span>
                   </div>
-                  <p className="text-sm font-bold text-indigo-600 uppercase tracking-widest">{exp.title}</p>
+                  <p className="text-sm font-black text-udsm-blue uppercase tracking-widest mt-1.5">{exp.title}</p>
                   {exp.parentId && (
-                    <p className="text-[10px] text-gray-400 font-medium mt-1">Reports to: {experts.find(e => e.id === exp.parentId)?.name || 'Unknown'}</p>
+                    <div className="flex items-center gap-2 mt-2">
+                       <div className="w-1.5 h-1.5 rounded-full bg-udsm-gold" />
+                       <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Supervisor: {experts.find(e => e.id === exp.parentId)?.name || 'Ecosystem Lead'}</p>
+                    </div>
                   )}
                 </div>
               </div>
-              <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button onClick={() => handleEdit(exp)} variant="outline" className="rounded-xl p-2 h-auto hover:bg-indigo-50 border-indigo-100 text-indigo-600">
+              <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">
+                <Button onClick={() => handleEdit(exp)} variant="outline" className="rounded-xl w-12 h-12 hover:bg-udsm-blue hover:text-white border-gray-100 dark:border-gray-800 transition-all">
                   <Edit className="h-4 w-4" />
                 </Button>
-                <Button onClick={() => handleDelete(exp.id)} variant="outline" className="rounded-xl p-2 h-auto text-red-600 border-red-100 hover:bg-red-50">
+                <Button onClick={() => handleDelete(exp.id)} variant="outline" className="rounded-xl w-12 h-12 text-red-600 border-red-50 dark:border-red-900/50 hover:bg-red-50 dark:hover:bg-red-950 transition-all">
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
