@@ -29,10 +29,7 @@ const Login = ({ onLogin, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const roles = [
-    { value: 'superuser', label: 'Superuser', icon: ShieldAlert, color: 'text-red-500' },
-    { value: 'facilitator', label: 'Facilitator', icon: ShieldCheck, color: 'text-purple-500' },
-    { value: 'coordinator', label: 'Coordinator', icon: Laptop, color: 'text-blue-500' },
+  const publicRoles = [
     { value: 'member', label: 'Normal Member', icon: User, color: 'text-green-500' },
     { value: 'guest', label: 'Guest', icon: Coffee, color: 'text-gray-500' },
   ];
@@ -155,7 +152,7 @@ const Login = ({ onLogin, onClose }) => {
                           value={formData.role}
                           onChange={(e) => setFormData({ ...formData, role: e.target.value, isStudent: false })}
                         >
-                          {roles.map((role) => (
+                          {publicRoles.map((role) => (
                             <option key={role.value} value={role.value}>
                               {role.label}
                             </option>
