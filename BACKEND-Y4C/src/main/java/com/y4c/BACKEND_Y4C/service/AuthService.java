@@ -12,9 +12,11 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
-    public AuthService(UserRepository userRepository) {
+    public AuthService(UserRepository userRepository, EmailService emailService) {
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     public User register(RegisterRequest request) {
@@ -25,14 +27,10 @@ public class AuthService {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword()); // In production, use BCrypt
-        user.setRole(request.getRole() != null ? request.getRole() : "USER");
+        user.setRole(request.getRole() != null ? request.getRole() : "member");
         
-        // If registering as a facilitator, set status to PENDING
-        if ("FACILITATOR".equalsIgnoreCase(user.getRole())) {
-            user.setStatus("PENDING");
-        } else {
-            user.setStatus("ACTIVE");
-        }
+        // All self-registrations are PENDING until approved by facilitator
+        user.setStatus("PENDING");
         
         user.setIsStudent(request.getIsStudent());
         user.setRegistrationNumber(request.getRegistrationNumber());
@@ -49,6 +47,23 @@ public class AuthService {
         if (!user.getPassword().equals(request.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
+
+        if ("PENDING".equalsIgnoreCase(user.getStatus())) {
+            throw new RuntimeException("Account pending approval. You will be notified via email once accepted.");
+        }
+
         return user;
+    }
+
+    public void forgotPassword(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User with this email not found"));
+        
+        // Generate a simple recovery code
+        String recoveryCode = String.valueOf((int)(Math.random() * 900000) + 100000);
+        
+        // In a real app, you'd store this code in DB with expiry
+        // For simulation, we just log it and send email
+        emailService.sendPasswordResetEmail(user.getEmail(), user.getName(), recoveryCode);
     }
 }

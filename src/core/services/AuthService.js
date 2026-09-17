@@ -15,6 +15,9 @@ export const AuthService = {
         await AuthRepository.logout();
         localStorage.removeItem('y4c_user');
     },
+    async forgotPassword(email) {
+        return await AuthRepository.forgotPassword(email);
+    },
     getCurrentUser() {
         try {
             const user = localStorage.getItem('y4c_user');

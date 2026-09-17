@@ -20,12 +20,12 @@ const MemberManagement = () => {
   const handleAddMember = async (e) => {
     e.preventDefault();
     try {
-      await apiClient.post('/auth/register', { ...newUser, status: 'ACTIVE' });
-      toast({ title: "Success", description: "Member added directly" });
+      await apiClient.post('/facilitator/users', newUser);
+      toast({ title: "Success", description: "Member added directly and notified." });
       setShowAddForm(false);
       fetchPendingUsers();
     } catch (error) {
-      toast({ title: "Error", description: "Failed to add member", variant: "destructive" });
+      toast({ title: "Error", description: error.response?.data || "Failed to add member", variant: "destructive" });
     }
   };
 

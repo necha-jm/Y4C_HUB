@@ -17,12 +17,18 @@ public class Event {
     private String timeRange; // e.g., "9:00 AM - 5:00 PM"
     private String location;
     private String imageUrl;
+    
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "event_images", joinColumns = @JoinColumn(name = "event_id"))
+    @Column(name = "image_url")
+    private java.util.List<String> images;
+    
     private LocalDateTime expiryDate;
     private Boolean isPublished = true;
 
     public Event() {}
 
-    public Event(Long id, String title, String description, LocalDateTime date, String timeRange, String location, String imageUrl, LocalDateTime expiryDate, Boolean isPublished) {
+    public Event(Long id, String title, String description, LocalDateTime date, String timeRange, String location, String imageUrl, java.util.List<String> images, LocalDateTime expiryDate, Boolean isPublished) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -30,6 +36,7 @@ public class Event {
         this.timeRange = timeRange;
         this.location = location;
         this.imageUrl = imageUrl;
+        this.images = images;
         this.expiryDate = expiryDate;
         this.isPublished = isPublished;
     }
@@ -48,6 +55,8 @@ public class Event {
     public void setLocation(String location) { this.location = location; }
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public java.util.List<String> getImages() { return images; }
+    public void setImages(java.util.List<String> images) { this.images = images; }
     public LocalDateTime getExpiryDate() { return expiryDate; }
     public void setExpiryDate(LocalDateTime expiryDate) { this.expiryDate = expiryDate; }
     public Boolean getIsPublished() { return isPublished; }

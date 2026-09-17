@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Calendar, MapPin, Clock, CheckCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Calendar, MapPin, Clock, CheckCircle, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import apiClient from '@/core/apiClient';
+import GalleryModal from './common/GalleryModal';
 
 const Events = () => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedGallery, setSelectedGallery] = useState(null);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -99,7 +101,17 @@ const Events = () => {
                   </div>
                 </div>
 
-                <div className="p-6 pt-0">
+                <div className="p-6 pt-0 space-y-3">
+                  {event.images && event.images.length > 0 && (
+                    <Button
+                      variant="outline"
+                      onClick={() => setSelectedGallery({ images: [event.imageUrl, ...event.images].filter(Boolean), title: event.title })}
+                      className="w-full h-12 rounded-xl border-gray-800 text-gray-400 hover:text-white hover:bg-gray-800 gap-2 font-black uppercase tracking-widest text-xs"
+                    >
+                      <ImageIcon className="h-4 w-4" />
+                      View Media Gallery
+                    </Button>
+                  )}
                   <Button
                     asChild
                     disabled={outdated}
@@ -128,6 +140,13 @@ const Events = () => {
           </div>
         )}
       </div>
+
+      <GalleryModal
+        isOpen={!!selectedGallery}
+        images={selectedGallery?.images}
+        title={selectedGallery?.title}
+        onClose={() => setSelectedGallery(null)}
+      />
     </section>
   );
 };

@@ -14,6 +14,7 @@ import Logo from '@/components/ui/Logo';
 const Login = ({ onLogin, onClose }) => {
   const navigate = useNavigate();
   const [isSignup, setIsSignup] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -39,6 +40,16 @@ const Login = ({ onLogin, onClose }) => {
     setIsLoading(true);
 
     try {
+      if (isForgotPassword) {
+        await AuthService.forgotPassword(formData.email);
+        toast({
+          title: "Recovery email sent! 📧",
+          description: "Check your inbox (simulated in console) for your reset code."
+        });
+        setIsForgotPassword(false);
+        return;
+      }
+
       if (isSignup) {
         if (formData.password !== formData.confirmPassword) {
           toast({
@@ -51,10 +62,12 @@ const Login = ({ onLogin, onClose }) => {
         }
         await AuthService.register(formData);
         toast({
-          title: "Account created! 🎉",
-          description: "Successfully registered and logged in."
+          title: "Registration Received! 🎉",
+          description: "Your account is pending approval. You will receive an email once a facilitator accepts your request."
         });
-        window.location.reload(); // Refresh to update state in App.jsx
+        setIsSignup(false); // Switch to login view
+        setIsLoading(false);
+        return;
       } else {
         const success = await onLogin({ email: formData.email, password: formData.password });
         if (success) {
@@ -112,234 +125,280 @@ const Login = ({ onLogin, onClose }) => {
             </motion.div>
 
             <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tighter">
-              {isSignup ? 'Join the Innovation' : 'Welcome Back'}
+              {isForgotPassword ? 'Reset Password' : isSignup ? 'Join the Innovation' : 'Welcome Back'}
             </h2>
             <p className="text-gray-500 dark:text-gray-400 mt-3 font-bold uppercase tracking-widest text-[10px]">
-              {isSignup ? 'Create your unique lab profile' : 'Access your personalized dashboard'}
+              {isForgotPassword ? 'Enter your email to receive recovery instructions' : isSignup ? 'Create your unique lab profile' : 'Access your personalized dashboard'}
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <AnimatePresence mode="wait">
-              {isSignup && (
+              {isForgotPassword ? (
                 <motion.div
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   className="space-y-6"
                 >
-                  <div>
-                    <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Full Name</label>
+                   <div>
+                    <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Registered Email Address</label>
                     <div className="relative">
                       <Input
                         required
+                        type="email"
                         className="rounded-2xl h-14 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 text-lg font-bold px-12"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="John Doe"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="name@y4clab.com"
                       />
-                      <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <LogIn className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                    </div>
+                  </div>
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full h-16 rounded-[1.5rem] bg-udsm-blue hover:bg-blue-700 shadow-xl text-lg font-black"
+                  >
+                    {isLoading ? <RefreshCw className="h-5 w-5 animate-spin" /> : 'SEND RECOVERY EMAIL'}
+                  </Button>
+                  <button
+                    type="button"
+                    onClick={() => setIsForgotPassword(false)}
+                    className="w-full text-center text-[10px] font-black text-gray-400 hover:text-udsm-blue uppercase tracking-widest"
+                  >
+                    Back to Login
+                  </button>
+                </motion.div>
+              ) : (
+                <>
+                  {isSignup && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      className="space-y-6"
+                    >
+                      <div>
+                        <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Full Name</label>
+                        <div className="relative">
+                          <Input
+                            required
+                            className="rounded-2xl h-14 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 text-lg font-bold px-12"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            placeholder="John Doe"
+                          />
+                          <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="md:col-span-2">
+                          <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Select Role</label>
+                          <div className="relative">
+                            <select
+                              required
+                              className="w-full rounded-2xl h-14 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 text-lg font-bold px-12 outline-none focus:ring-2 focus:ring-udsm-blue dark:text-white appearance-none cursor-pointer"
+                              value={formData.role}
+                              onChange={(e) => setFormData({ ...formData, role: e.target.value, isStudent: false })}
+                            >
+                              {publicRoles.map((role) => (
+                                <option key={role.value} value={role.value}>
+                                  {role.label}
+                                </option>
+                              ))}
+                            </select>
+                            <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-udsm-blue" />
+                          </div>
+                        </div>
+
+                        {formData.role === 'member' && (
+                          <>
+                            <div className="md:col-span-1">
+                              <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Reg No</label>
+                              <Input
+                                required
+                                className="rounded-xl h-12 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 font-bold px-4"
+                                value={formData.registrationNumber}
+                                onChange={(e) => setFormData({ ...formData, registrationNumber: e.target.value })}
+                                placeholder="BCS-01-..."
+                              />
+                            </div>
+                            <div className="md:col-span-1">
+                              <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">University</label>
+                              <Input
+                                required
+                                className="rounded-xl h-12 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 font-bold px-4"
+                                value={formData.university}
+                                onChange={(e) => setFormData({ ...formData, university: e.target.value })}
+                                placeholder="UDSM"
+                              />
+                            </div>
+                            <div className="md:col-span-1">
+                              <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Program</label>
+                              <Input
+                                required
+                                className="rounded-xl h-12 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 font-bold px-4"
+                                value={formData.program}
+                                onChange={(e) => setFormData({ ...formData, program: e.target.value })}
+                                placeholder="Computer Science"
+                              />
+                            </div>
+                            <div className="md:col-span-1">
+                              <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Year</label>
+                              <select
+                                required
+                                className="w-full rounded-xl h-12 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 font-bold px-4 outline-none focus:ring-2 focus:ring-udsm-blue dark:text-white"
+                                value={formData.yearOfStudy}
+                                onChange={(e) => setFormData({ ...formData, yearOfStudy: e.target.value })}
+                              >
+                                <option value="">Select</option>
+                                {[1, 2, 3, 4].map(y => <option key={y} value={y}>Year {y}</option>)}
+                              </select>
+                            </div>
+                          </>
+                        )}
+
+                        {formData.role === 'guest' && (
+                          <div className="md:col-span-2 space-y-4 bg-gray-50/50 dark:bg-gray-800/20 p-6 rounded-3xl border border-gray-100 dark:border-gray-800">
+                            <div className="flex items-center gap-3">
+                              <input
+                                type="checkbox"
+                                id="isStudent"
+                                className="w-5 h-5 rounded-lg border-gray-300 text-udsm-blue focus:ring-udsm-blue cursor-pointer"
+                                checked={formData.isStudent}
+                                onChange={(e) => setFormData({ ...formData, isStudent: e.target.checked })}
+                              />
+                              <label htmlFor="isStudent" className="text-sm font-black text-gray-600 dark:text-gray-300 cursor-pointer uppercase tracking-wider">
+                                I am currently a student
+                              </label>
+                            </div>
+
+                            <AnimatePresence>
+                              {formData.isStudent && (
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: 'auto' }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                >
+                                  <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2">University Name</label>
+                                  <Input
+                                    required
+                                    className="rounded-xl h-12 bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-700 font-bold px-4"
+                                    value={formData.university}
+                                    onChange={(e) => setFormData({ ...formData, university: e.target.value })}
+                                    placeholder="Where do you study?"
+                                  />
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+
+                  <div>
+                    <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Email Address</label>
+                    <div className="relative">
+                      <Input
+                        required
+                        type="email"
+                        className="rounded-2xl h-14 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 text-lg font-bold px-12"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="name@y4clab.com"
+                      />
+                      <LogIn className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="md:col-span-2">
-                      <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Select Role</label>
+                    <div className={isSignup ? "md:col-span-1" : "md:col-span-2"}>
+                      <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Password</label>
                       <div className="relative">
-                        <select
+                        <Input
                           required
-                          className="w-full rounded-2xl h-14 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 text-lg font-bold px-12 outline-none focus:ring-2 focus:ring-udsm-blue dark:text-white appearance-none cursor-pointer"
-                          value={formData.role}
-                          onChange={(e) => setFormData({ ...formData, role: e.target.value, isStudent: false })}
+                          type={showPassword ? "text" : "password"}
+                          className="rounded-2xl h-14 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 text-lg font-bold px-4 pr-12"
+                          value={formData.password}
+                          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                          placeholder="••••••••"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-udsm-blue transition-colors"
                         >
-                          {publicRoles.map((role) => (
-                            <option key={role.value} value={role.value}>
-                              {role.label}
-                            </option>
-                          ))}
-                        </select>
-                        <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-udsm-blue" />
+                          {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                        </button>
                       </div>
                     </div>
 
-                    {formData.role === 'member' && (
-                      <>
-                        <div className="md:col-span-1">
-                          <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Reg No</label>
-                          <Input
-                            required
-                            className="rounded-xl h-12 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 font-bold px-4"
-                            value={formData.registrationNumber}
-                            onChange={(e) => setFormData({ ...formData, registrationNumber: e.target.value })}
-                            placeholder="BCS-01-..."
-                          />
-                        </div>
-                        <div className="md:col-span-1">
-                          <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">University</label>
-                          <Input
-                            required
-                            className="rounded-xl h-12 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 font-bold px-4"
-                            value={formData.university}
-                            onChange={(e) => setFormData({ ...formData, university: e.target.value })}
-                            placeholder="UDSM"
-                          />
-                        </div>
-                        <div className="md:col-span-1">
-                          <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Program</label>
-                          <Input
-                            required
-                            className="rounded-xl h-12 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 font-bold px-4"
-                            value={formData.program}
-                            onChange={(e) => setFormData({ ...formData, program: e.target.value })}
-                            placeholder="Computer Science"
-                          />
-                        </div>
-                        <div className="md:col-span-1">
-                          <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Year</label>
-                          <select
-                            required
-                            className="w-full rounded-xl h-12 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 font-bold px-4 outline-none focus:ring-2 focus:ring-udsm-blue dark:text-white"
-                            value={formData.yearOfStudy}
-                            onChange={(e) => setFormData({ ...formData, yearOfStudy: e.target.value })}
-                          >
-                            <option value="">Select</option>
-                            {[1, 2, 3, 4].map(y => <option key={y} value={y}>Year {y}</option>)}
-                          </select>
-                        </div>
-                      </>
-                    )}
-
-                    {formData.role === 'guest' && (
-                      <div className="md:col-span-2 space-y-4 bg-gray-50/50 dark:bg-gray-800/20 p-6 rounded-3xl border border-gray-100 dark:border-gray-800">
-                        <div className="flex items-center gap-3">
-                          <input
-                            type="checkbox"
-                            id="isStudent"
-                            className="w-5 h-5 rounded-lg border-gray-300 text-udsm-blue focus:ring-udsm-blue cursor-pointer"
-                            checked={formData.isStudent}
-                            onChange={(e) => setFormData({ ...formData, isStudent: e.target.checked })}
-                          />
-                          <label htmlFor="isStudent" className="text-sm font-black text-gray-600 dark:text-gray-300 cursor-pointer uppercase tracking-wider">
-                            I am currently a student
-                          </label>
-                        </div>
-
-                        <AnimatePresence>
-                          {formData.isStudent && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: 'auto' }}
-                              exit={{ opacity: 0, height: 0 }}
-                            >
-                              <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2">University Name</label>
-                              <Input
-                                required
-                                className="rounded-xl h-12 bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-700 font-bold px-4"
-                                value={formData.university}
-                                onChange={(e) => setFormData({ ...formData, university: e.target.value })}
-                                placeholder="Where do you study?"
-                              />
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                    {isSignup && (
+                      <div className="md:col-span-1">
+                        <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Confirm</label>
+                        <Input
+                          required
+                          type={showPassword ? "text" : "password"}
+                          className="rounded-2xl h-14 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 text-lg font-bold px-4"
+                          value={formData.confirmPassword}
+                          onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                          placeholder="••••••••"
+                        />
                       </div>
                     )}
                   </div>
-                </motion.div>
+
+                  {!isSignup && (
+                    <div className="flex justify-end px-1">
+                      <button
+                        type="button"
+                        onClick={() => setIsForgotPassword(true)}
+                        className="text-[10px] font-black text-udsm-blue hover:text-udsm-gold uppercase tracking-widest transition-colors"
+                      >
+                        Forgot Password?
+                      </button>
+                    </div>
+                  )}
+
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full h-16 rounded-[1.5rem] bg-gradient-to-r from-udsm-blue via-forest-green to-udsm-gold hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-udsm-blue/20 text-xl font-black transition-all mt-4"
+                  >
+                    {isLoading ? (
+                      <div className="flex items-center gap-3">
+                        <RefreshCw className="h-5 w-5 animate-spin" />
+                        <span>PROCESSING...</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        {isSignup ? <UserPlus className="h-6 w-6" /> : <LogIn className="h-6 w-6" />}
+                        <span>{isSignup ? 'CREATE LAB ACCOUNT' : 'ACCESS DASHBOARD'}</span>
+                      </div>
+                    )}
+                  </Button>
+                </>
               )}
             </AnimatePresence>
-
-            <div>
-              <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Email Address</label>
-              <div className="relative">
-                <Input
-                  required
-                  type="email"
-                  className="rounded-2xl h-14 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 text-lg font-bold px-12"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="name@y4clab.com"
-                />
-                <LogIn className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className={isSignup ? "md:col-span-1" : "md:col-span-2"}>
-                <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Password</label>
-                <div className="relative">
-                  <Input
-                    required
-                    type={showPassword ? "text" : "password"}
-                    className="rounded-2xl h-14 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 text-lg font-bold px-4 pr-12"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    placeholder="••••••••"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-udsm-blue transition-colors"
-                  >
-                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                  </button>
-                </div>
-              </div>
-
-              {isSignup && (
-                <div className="md:col-span-1">
-                  <label className="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 ml-1">Confirm</label>
-                  <Input
-                    required
-                    type={showPassword ? "text" : "password"}
-                    className="rounded-2xl h-14 bg-gray-50/50 dark:bg-gray-800/30 border-gray-100 dark:border-gray-700 text-lg font-bold px-4"
-                    value={formData.confirmPassword}
-                    onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                    placeholder="••••••••"
-                  />
-                </div>
-              )}
-            </div>
-
-            {!isSignup && (
-              <div className="flex justify-end px-1">
-                <button type="button" className="text-[10px] font-black text-udsm-blue hover:text-udsm-gold uppercase tracking-widest transition-colors">
-                  Forgot Password?
-                </button>
-              </div>
-            )}
-
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full h-16 rounded-[1.5rem] bg-gradient-to-r from-udsm-blue via-forest-green to-udsm-gold hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-udsm-blue/20 text-xl font-black transition-all mt-4"
-            >
-              {isLoading ? (
-                <div className="flex items-center gap-3">
-                  <RefreshCw className="h-5 w-5 animate-spin" />
-                  <span>PROCESSING...</span>
-                </div>
-              ) : (
-                <div className="flex items-center gap-2">
-                  {isSignup ? <UserPlus className="h-6 w-6" /> : <LogIn className="h-6 w-6" />}
-                  <span>{isSignup ? 'CREATE LAB ACCOUNT' : 'ACCESS DASHBOARD'}</span>
-                </div>
-              )}
-            </Button>
           </form>
 
-          <div className="mt-10 text-center pb-4">
-            <button
-              onClick={() => {
-                setIsSignup(!isSignup);
-                setFormData({ email: '', password: '', confirmPassword: '', name: '', role: 'member', isStudent: false, registrationNumber: '', program: '', yearOfStudy: '', university: '' });
-              }}
-              className="group text-gray-500 dark:text-gray-400 hover:text-udsm-blue dark:hover:text-udsm-gold font-black tracking-widest uppercase text-[10px] transition-colors flex items-center justify-center gap-2 mx-auto"
-            >
-              {isSignup ? 'Already have an account?' : "Don't have an account?"}
-              <span className="text-udsm-blue group-hover:underline">{isSignup ? 'Login Now' : 'Join Y4C Lab'}</span>
-            </button>
-          </div>
+          {!isForgotPassword && (
+            <div className="mt-10 text-center pb-4">
+              <button
+                onClick={() => {
+                  setIsSignup(!isSignup);
+                  setFormData({ email: '', password: '', confirmPassword: '', name: '', role: 'member', isStudent: false, registrationNumber: '', program: '', yearOfStudy: '', university: '' });
+                }}
+                className="group text-gray-500 dark:text-gray-400 hover:text-udsm-blue dark:hover:text-udsm-gold font-black tracking-widest uppercase text-[10px] transition-colors flex items-center justify-center gap-2 mx-auto"
+              >
+                {isSignup ? 'Already have an account?' : "Don't have an account?"}
+                <span className="text-udsm-blue group-hover:underline">{isSignup ? 'Login Now' : 'Join Y4C Lab'}</span>
+              </button>
+            </div>
+          )}
         </div>
       </motion.div>
     </div>

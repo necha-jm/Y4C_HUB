@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   User, Rocket, Award, Heart, Search, BookOpen,
   Layout, Calendar, Layers, MessageSquare, Home, LogOut, TrendingUp, Star, Video,
-  Menu, X, ChevronRight, Bell
+  Menu, X, ChevronRight, Bell, Image as ImageIcon
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -14,6 +14,7 @@ import TimetableDisplay from './common/TimetableDisplay';
 import ProjectSubmission from './common/ProjectSubmission';
 import SupportRequests from './member/SupportRequests';
 import AchievementOrbit from './member/AchievementOrbit';
+import LabCommunityGallery from './member/LabCommunityGallery';
 
 const MemberDashboard = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -23,6 +24,7 @@ const MemberDashboard = ({ user, onLogout }) => {
   const tabs = [
     { id: 'overview', label: 'Overview', icon: Layout },
     { id: 'learning', label: 'Learning Path', icon: BookOpen },
+    { id: 'gallery', label: 'Lab Gallery', icon: ImageIcon },
     { id: 'schedule', label: 'Schedule', icon: Calendar },
     { id: 'projects', label: 'My Projects', icon: Layers },
     { id: 'support', label: 'Support', icon: MessageSquare },
@@ -73,6 +75,7 @@ const MemberDashboard = ({ user, onLogout }) => {
             </div>
           </motion.div>
         );
+      case 'gallery': return <LabCommunityGallery user={user} />;
       case 'schedule': return <TimetableDisplay />;
       case 'projects': return <ProjectSubmission user={user} />;
       case 'support': return <SupportRequests user={user} />;

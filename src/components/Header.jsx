@@ -68,6 +68,7 @@ const Header = ({ onLoginClick, isAuthenticated }) => {
   const programLinks = [
     { name: 'Our Programs', id: 'programs' },
     { name: 'Events & Workshops', id: 'events' },
+    { name: 'Lab Gallery', id: 'gallery' },
     { name: 'Resources & Learning', id: 'resources' },
     { name: 'Startups & Success Stories', id: 'startups' },
     { name: 'Collaboration', id: 'collaboration' },

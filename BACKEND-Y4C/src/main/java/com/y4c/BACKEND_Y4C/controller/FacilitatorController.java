@@ -33,6 +33,11 @@ public class FacilitatorController {
         return ResponseEntity.ok(facilitatorService.admitUser(id));
     }
 
+    @PostMapping("/users")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        return ResponseEntity.ok(facilitatorService.createActiveUser(user));
+    }
+
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         facilitatorService.deleteUser(id);
@@ -84,5 +89,17 @@ public class FacilitatorController {
     @PutMapping("/requests/{id}/respond")
     public ResponseEntity<Request> respondToRequest(@PathVariable Long id, @RequestBody String response) {
         return ResponseEntity.ok(facilitatorService.respondToRequest(id, response));
+    }
+
+    // Gallery Management
+    @DeleteMapping("/gallery/{id}")
+    public ResponseEntity<Void> deleteGalleryItem(@PathVariable Long id) {
+        facilitatorService.deleteGalleryItem(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/gallery/{id}")
+    public ResponseEntity<LabGallery> updateGalleryItem(@PathVariable Long id, @RequestBody LabGallery item) {
+        return ResponseEntity.ok(facilitatorService.updateGalleryItem(id, item));
     }
 }

@@ -6,6 +6,7 @@ import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Programs from '@/components/Programs';
 import Events from '@/components/Events';
+import LabGallerySection from '@/components/LabGallerySection';
 import Resources from '@/components/Resources';
 import Startups from '@/components/Startups';
 import Collaboration from '@/components/Collaboration';
@@ -43,6 +44,7 @@ const MainLayout = ({ onLoginClick, isAuthenticated }) => (
         <Partners />
         <Programs />
         <Events />
+        <LabGallerySection />
         <Resources />
         <Startups />
         <Collaboration />

@@ -20,6 +20,7 @@ import ProjectReview from './moderator/ProjectReview';
 import LandingPageEditor from './moderator/LandingPageEditor';
 import RequestQueue from './moderator/RequestQueue';
 import HcdAdminDashboard from './moderator/hcd/HcdAdminDashboard';
+import LabCommunityGallery from './member/LabCommunityGallery';
 
 const FacilitatorDashboard = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -52,6 +53,7 @@ const FacilitatorDashboard = ({ user, onLogout }) => {
     { id: 'hcd', label: 'HCD Lab', icon: BarChart3, color: 'text-udsm-gold' },
     { id: 'landing', label: 'Landing Page', icon: Monitor, color: 'text-pink-500' },
     { id: 'requests', label: 'Requests', icon: MessageSquare, color: 'text-indigo-500' },
+    { id: 'gallery', label: 'Lab Gallery', icon: ShieldCheck, color: 'text-udsm-blue' },
     { id: 'members', label: 'Members', icon: UserPlus, color: 'text-udsm-blue' },
     { id: 'events', label: 'Events', icon: Calendar, color: 'text-pink-500' },
     { id: 'projects', label: 'Projects', icon: Layers, color: 'text-udsm-gold' },
@@ -71,6 +73,7 @@ const FacilitatorDashboard = ({ user, onLogout }) => {
       case 'landing': return <LandingPageEditor role="facilitator" />;
       case 'requests': return <RequestQueue role="facilitator" />;
       case 'hcd': return <HcdAdminDashboard role="facilitator" />;
+      case 'gallery': return <LabCommunityGallery user={user} />;
       default: return (
         <div className="max-w-7xl mx-auto">
           {/* Quick Stats Grid */}

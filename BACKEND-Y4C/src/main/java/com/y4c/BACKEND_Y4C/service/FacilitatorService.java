@@ -17,19 +17,25 @@ public class FacilitatorService {
     private final ProjectRepository projectRepository;
     private final SiteContentRepository siteContentRepository;
     private final RequestRepository requestRepository;
+    private final LabGalleryRepository labGalleryRepository;
+    private final EmailService emailService;
 
     public FacilitatorService(UserRepository userRepository, 
                             EventRepository eventRepository, 
                             TimetableRepository timetableRepository, 
                             ProjectRepository projectRepository, 
                             SiteContentRepository siteContentRepository, 
-                            RequestRepository requestRepository) {
+                            RequestRepository requestRepository,
+                            LabGalleryRepository labGalleryRepository,
+                            EmailService emailService) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
         this.timetableRepository = timetableRepository;
         this.projectRepository = projectRepository;
         this.siteContentRepository = siteContentRepository;
         this.requestRepository = requestRepository;
+        this.labGalleryRepository = labGalleryRepository;
+        this.emailService = emailService;
     }
 
     // CMS Management
@@ -51,7 +57,14 @@ public class FacilitatorService {
         Request req = requestRepository.findById(requestId).orElseThrow(() -> new RuntimeException("Request not found"));
         req.setFacilitatorResponse(response);
         req.setStatus("RESOLVED");
-        return requestRepository.save(req);
+        Request savedReq = requestRepository.save(req);
+
+        // Fetch user to get their email
+        userRepository.findById(req.getUserId()).ifPresent(user -> {
+            emailService.sendRequestResponseNotification(user.getEmail(), user.getName(), req.getSubject());
+        });
+
+        return savedReq;
     }
 
     // User Management
@@ -62,11 +75,40 @@ public class FacilitatorService {
     public User admitUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         user.setStatus("ACTIVE");
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        
+        // Notify user via email
+        emailService.sendMemberAdmissionNotification(savedUser.getEmail(), savedUser.getName());
+        
+        return savedUser;
+    }
+
+    public User createActiveUser(User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new RuntimeException("User already exists");
+        }
+        user.setStatus("ACTIVE");
+        User savedUser = userRepository.save(user);
+        
+        // Notify user via email
+        emailService.sendMemberAdmissionNotification(savedUser.getEmail(), savedUser.getName());
+        
+        return savedUser;
     }
 
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    // Gallery Management
+    public void deleteGalleryItem(Long id) {
+        labGalleryRepository.deleteById(id);
+    }
+
+    public LabGallery updateGalleryItem(Long id, LabGallery details) {
+        LabGallery item = labGalleryRepository.findById(id).orElseThrow();
+        item.setCaption(details.getCaption());
+        return labGalleryRepository.save(item);
     }
 
     // Event Management
@@ -129,6 +171,11 @@ public class FacilitatorService {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new RuntimeException("Project not found"));
         project.setStatus("APPROVED");
         Project savedProject = projectRepository.save(project);
+
+        // Notify innovator via email
+        if (project.getInnovatorEmail() != null) {
+            emailService.sendProjectApprovalNotification(project.getInnovatorEmail(), project.getInnovatorName(), project.getTitle());
+        }
 
         // Auto-assign to Hub Membership if not already a member
         if (project.getInnovatorEmail() != null) {

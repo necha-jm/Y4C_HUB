@@ -97,6 +97,11 @@ public class CoordinatorService {
         project.setStatus("APPROVED");
         Project savedProject = projectRepository.save(project);
 
+        // Notify innovator via email
+        if (project.getInnovatorEmail() != null) {
+            emailService.sendProjectApprovalNotification(project.getInnovatorEmail(), project.getInnovatorName(), project.getTitle());
+        }
+
         // Auto-assign to Hub Membership if not already a member
         if (project.getInnovatorEmail() != null) {
             String email = project.getInnovatorEmail();

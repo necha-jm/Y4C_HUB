@@ -36,4 +36,16 @@ public class AuthController {
             return ResponseEntity.status(401).body(e.getMessage());
         }
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody String email) {
+        try {
+            // Remove extra quotes if sent as a raw string
+            String cleanEmail = email.replace("\"", "");
+            authService.forgotPassword(cleanEmail);
+            return ResponseEntity.ok().body("{\"message\": \"Reset code sent to your email\"}");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
