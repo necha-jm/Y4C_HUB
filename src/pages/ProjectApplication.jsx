@@ -89,7 +89,7 @@ const ProjectApplication = () => {
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col">
       <Header />
 
-      <main className="flex-grow pt-48 lg:pt-64 pb-20 px-4">
+      <main className="flex-grow pt-20 lg:pt-28 pb-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

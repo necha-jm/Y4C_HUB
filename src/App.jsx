@@ -11,8 +11,6 @@ import Resources from '@/components/Resources';
 import Startups from '@/components/Startups';
 import Collaboration from '@/components/Collaboration';
 import Impact from '@/components/Impact';
-import Partners from '@/components/Partners';
-import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import Login from '@/components/Login';
 import Dashboard from '@/components/Dashboard';
@@ -22,6 +20,8 @@ import StartupStory from '@/pages/StartupStory';
 import EventRegister from '@/pages/EventRegister';
 import OurTeam from '@/pages/OurTeam';
 import ProjectApplication from '@/pages/ProjectApplication';
+import ContactPage from '@/pages/ContactPage';
+import PartnerRegistration from '@/pages/PartnerRegistration';
 import { Toaster } from '@/components/ui/toaster';
 import ScrollToTop from '@/components/ScrollToTop';
 import FloatingShapes from '@/components/FloatingShapes';
@@ -41,7 +41,6 @@ const MainLayout = ({ onLoginClick, isAuthenticated }) => (
       <main className="flex-grow">
         <Hero />
         <About />
-        <Partners />
         <Programs />
         <Events />
         <LabGallerySection />
@@ -49,7 +48,6 @@ const MainLayout = ({ onLoginClick, isAuthenticated }) => (
         <Startups />
         <Collaboration />
         <Impact />
-        <Contact />
       </main>
       <Footer />
     </div>
@@ -108,6 +106,8 @@ function App() {
           <Route path="/startup/:id" element={<StartupStory />} />
           <Route path="/register/:eventId" element={<EventRegister />} />
           <Route path="/propose" element={<ProjectApplication />} />
+          <Route path="/register-partner" element={<PartnerRegistration />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/our-team" element={<OurTeam />} />
           <Route path="/dashboard" element={
             isAuthenticated ? (

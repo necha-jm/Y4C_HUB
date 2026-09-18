@@ -95,9 +95,11 @@ const LabCommunityGallery = ({ user }) => {
           </h2>
           <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Share memories from your daily lab life</p>
         </div>
-        <Button onClick={() => setShowAddForm(true)} className="bg-udsm-blue hover:bg-blue-700 gap-2 rounded-xl font-bold px-6">
-          <Plus className="h-4 w-4" /> Share Memory
-        </Button>
+        {user?.role?.toLowerCase() !== 'guest' && (
+          <Button onClick={() => setShowAddForm(true)} className="bg-udsm-blue hover:bg-blue-700 gap-2 rounded-xl font-bold px-6">
+            <Plus className="h-4 w-4" /> Share Memory
+          </Button>
+        )}
       </div>
 
       <AnimatePresence>

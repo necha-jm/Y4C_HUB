@@ -145,6 +145,27 @@ const Contact = () => {
             </form>
           </motion.div>
         </div>
+
+        {/* Map Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-20 rounded-[3rem] overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-800 relative z-10"
+        >
+          <div className="bg-white dark:bg-gray-900 p-2">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.987105517626!2d39.23738477415657!3d-6.771422766216459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c4e9e55555555%3A0x31c34ce3703cc9eb!2sCollege%20of%20Information%20and%20Communication%20Technologies%20(CoICT)%20-%20University%20of%20Dar%20es%20salaam!5e0!3m2!1sen!2stz!4v1789728195683!5m2!1sen!2stz"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              className="rounded-[2.5rem] grayscale hover:grayscale-0 transition-all duration-700"
+            ></iframe>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

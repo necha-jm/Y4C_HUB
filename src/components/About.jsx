@@ -25,15 +25,6 @@ const About = () => {
           >
             About the <span className="bg-gradient-to-r from-udsm-blue via-forest-green to-udsm-gold bg-clip-text text-transparent italic">Lab</span>
           </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-xl text-gray-600 dark:text-gray-400 font-medium leading-relaxed"
-          >
-            A collaborative environment where young innovators transform ideas into impactful solutions through technology and design thinking.
-          </motion.p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -62,7 +53,7 @@ const About = () => {
                 {item.link && (
                   <div className="pt-6">
                     <Link to={item.link} className="text-udsm-blue dark:text-blue-400 hover:underline font-black text-sm uppercase tracking-widest inline-flex items-center gap-2 group/link">
-                      Join us <ArrowRight className="h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
+                      View Team <ArrowRight className="h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 )}

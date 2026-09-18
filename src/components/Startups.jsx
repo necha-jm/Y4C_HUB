@@ -23,21 +23,6 @@ const Startups = () => {
           >
             Success <span className="bg-gradient-to-r from-udsm-blue to-forest-green bg-clip-text text-transparent">Stories</span>
           </motion.h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 font-medium leading-relaxed">
-            Celebrating the pioneers who turned ideas into thriving impact-driven ventures.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 max-w-2xl mx-auto">
-            {[
-              { v: '50+', l: 'Startups Launched' },
-              { v: '200+', l: 'Trained' },
-              { v: '15+', l: 'Awards Won' }
-            ].map((stat, i) => (
-              <div key={i} className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
-                <p className="text-4xl font-black text-udsm-blue dark:text-blue-400">{stat.v}</p>
-                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">{stat.l}</p>
-              </div>
-            ))}
-          </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">

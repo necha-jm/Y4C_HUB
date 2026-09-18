@@ -72,6 +72,28 @@ public class CoordinatorController {
         return ResponseEntity.ok(coordinatorService.createEvent(event));
     }
 
+    // Partner Management Endpoints
+    @GetMapping("/partners/pending")
+    public ResponseEntity<List<PartnerRequest>> getPendingPartners() {
+        return ResponseEntity.ok(coordinatorService.getPendingPartners());
+    }
+
+    @PutMapping("/partners/{id}/approve")
+    public ResponseEntity<PartnerRequest> approvePartner(@PathVariable Long id) {
+        return ResponseEntity.ok(coordinatorService.approvePartner(id));
+    }
+
+    @PutMapping("/partners/{id}/publish")
+    public ResponseEntity<PartnerRequest> publishPartner(@PathVariable Long id) {
+        return ResponseEntity.ok(coordinatorService.publishPartner(id));
+    }
+
+    @DeleteMapping("/partners/{id}")
+    public ResponseEntity<Void> deletePartner(@PathVariable Long id) {
+        coordinatorService.deletePartnerRequest(id);
+        return ResponseEntity.ok().build();
+    }
+
     // Expert Management Endpoints
     @GetMapping("/experts")
     public ResponseEntity<List<Expert>> getAllExperts() {

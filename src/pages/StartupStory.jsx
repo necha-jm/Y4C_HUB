@@ -44,7 +44,7 @@ const StartupStory = () => {
         <meta name="description" content={`Read the success story of ${story.name}, a startup from the Y4C Innovation Lab.`} />
       </Helmet>
       <Header />
-      <main className="pt-48 lg:pt-64 bg-white">
+      <main className="pt-20 lg:pt-28 bg-white">
         <div className="container mx-auto px-4 py-16">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <Link to="/" className="inline-flex items-center gap-2 text-udsm-blue font-semibold hover:underline mb-8">

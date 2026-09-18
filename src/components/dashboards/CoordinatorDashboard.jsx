@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Laptop, BookOpen, Users, Calendar, Video, Star,
   ShieldCheck, UserPlus, Trash2, CheckCircle, RefreshCw, X, Layers, TrendingUp,
-  LogOut, Layout, Settings, Home, Menu, Bell
+  LogOut, Layout, Settings, Home, Menu, Bell, Building2
 } from 'lucide-react';
 import apiClient from '@/core/apiClient';
 import { toast } from '@/components/ui/use-toast';
@@ -17,6 +17,7 @@ import ProjectReview from './moderator/ProjectReview';
 import EventManager from './moderator/EventManager';
 import ExpertManager from './moderator/ExpertManager';
 import LabCommunityGallery from './member/LabCommunityGallery';
+import PartnerReview from './moderator/PartnerReview';
 
 const CoordinatorDashboard = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -117,6 +118,7 @@ const CoordinatorDashboard = ({ user, onLogout }) => {
     { id: 'projects', label: 'Projects', icon: Layers },
     { id: 'events', label: 'Events', icon: Calendar },
     { id: 'experts', label: 'Experts', icon: Users },
+    { id: 'partners', label: 'Partners', icon: Building2 },
     { id: 'gallery', label: 'Lab Gallery', icon: BookOpen },
     { id: 'facilitators', label: 'Facilitators', icon: ShieldCheck },
   ];
@@ -126,6 +128,7 @@ const CoordinatorDashboard = ({ user, onLogout }) => {
       case 'projects': return <ProjectReview role="coordinator" />;
       case 'events': return <EventManager role="coordinator" />;
       case 'experts': return <ExpertManager />;
+      case 'partners': return <PartnerReview />;
       case 'gallery': return <LabCommunityGallery user={user} />;
       case 'facilitators':
         return (

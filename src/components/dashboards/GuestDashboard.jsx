@@ -23,6 +23,7 @@ const GuestDashboard = ({ user, onLogout }) => {
     { id: 'overview', label: 'Overview', icon: Layout },
     { id: 'programs', label: 'Explore Programs', icon: Compass },
     { id: 'gallery', label: 'Lab Gallery', icon: ShieldCheck },
+    { id: 'resources', label: 'Resources', icon: MessageSquare },
     { id: 'events', label: 'Public Events', icon: Zap },
     { id: 'membership', label: 'Join the Lab', icon: Star },
   ];
@@ -61,6 +62,43 @@ const GuestDashboard = ({ user, onLogout }) => {
                   </Button>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        );
+      case 'resources':
+        return (
+          <div className="max-w-7xl mx-auto space-y-10">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div>
+                <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight uppercase">Knowledge Library</h2>
+                <p className="text-gray-500 mt-2 font-medium italic">Curated guides and tools for young innovators.</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                { title: 'Innovation Framework', type: 'PDF Guide', color: 'text-udsm-blue', bg: 'bg-blue-50' },
+                { title: 'Pitch Deck Template', type: 'PPTX', color: 'text-udsm-gold', bg: 'bg-yellow-50' },
+                { title: 'Tech Stack Guide 2025', type: 'E-Book', color: 'text-forest-green', bg: 'bg-green-50' }
+              ].map((res, i) => (
+                <div key={i} className="bg-white dark:bg-gray-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-xl group hover:scale-[1.02] transition-all">
+                   <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-inner", res.bg, res.color)}>
+                      <Download className="h-6 w-6" />
+                   </div>
+                   <p className="text-[9px] font-black uppercase text-gray-400 tracking-widest mb-1">{res.type}</p>
+                   <h4 className="text-xl font-black text-gray-900 dark:text-white">{res.title}</h4>
+                   <Button variant="link" className="p-0 h-auto mt-6 text-udsm-blue font-black uppercase tracking-widest text-[10px] gap-2">
+                      Preview Document <ExternalLink className="h-3 w-3" />
+                   </Button>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-10 bg-gray-900 rounded-[2.5rem] text-center text-white relative overflow-hidden">
+               <div className="absolute inset-0 bg-gradient-to-r from-udsm-blue/20 to-transparent" />
+               <p className="text-xs font-black uppercase tracking-[0.3em] text-udsm-gold mb-4">Premium Access Required</p>
+               <h3 className="text-2xl font-black mb-6">Unlock 200+ Innovation Templates</h3>
+               <Button onClick={() => setActiveTab('membership')} className="bg-white text-black rounded-xl px-10 h-14 font-black uppercase tracking-widest text-xs hover:bg-gray-100">Upgrade to Member</Button>
             </div>
           </div>
         );

@@ -16,7 +16,7 @@ const Hero = () => {
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
   const [heroContent, setHeroContent] = useState({
-    title: 'YOUTH FOR CHILDREN INNOVATION LAB',
+    title: 'YOUTH FOR CHANGE INNOVATION LAB',
     subtitle: 'Nurturing ideas, sharing solutions, and building the future. A space where young minds transform communities through Open Innovation.',
     image: "/Images/Photo05.png"
   });
@@ -31,7 +31,7 @@ const Hero = () => {
         if (projectRes.data) {
           const p = projectRes.data;
           setHeroContent({
-            title: p.title || 'YOUTH FOR CHILDREN INNOVATION LAB',
+            title: p.title || 'YOUTH FOR CHANGE INNOVATION LAB',
             subtitle: p.subtitle || 'Nurturing ideas, sharing solutions, and building the future. A space where young minds transform communities through Open Innovation.',
             image: p.heroImageUrl || "/Images/Photo05.png"
           });
@@ -92,40 +92,36 @@ const Hero = () => {
             <img
               src={currentImages[index]}
               alt="Youth Innovation background"
-              className="w-full h-full object-cover scale-105"
+              className="w-full h-full object-cover"
             />
-            {/* Multi-layered Premium Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80" />
-            <div className="absolute inset-0 bg-udsm-blue/10 mix-blend-overlay" />
+            {/* Multi-layered Premium Overlay - lightened for transparency */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60" />
+            <div className="absolute inset-0 bg-udsm-blue/5 mix-blend-overlay" />
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Unique Texture Overlay */}
-      <div className="absolute inset-0 z-10 opacity-[0.15] pointer-events-none"
-           style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cubes.png")' }} />
-
-      {/* Dynamic Background Mesh (Premium feel) */}
+      {/* Dynamic Background Mesh (Reduced blur for clarity) */}
       <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
         <motion.div
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.2, 0.1],
-            x: [0, 50, 0],
-            y: [0, -30, 0]
+            scale: [1, 1.1, 1],
+            opacity: [0.05, 0.1, 0.05],
+            x: [0, 30, 0],
+            y: [0, -20, 0]
           }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[10%] left-[-10%] w-[800px] h-[800px] bg-udsm-blue/40 rounded-full blur-[150px]"
+          className="absolute top-[10%] left-[-10%] w-[600px] h-[600px] bg-udsm-blue/30 rounded-full blur-[100px]"
         />
         <motion.div
           animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.05, 0.15, 0.05],
-            x: [0, -60, 0],
-            y: [0, 40, 0]
+            scale: [1.1, 1, 1.1],
+            opacity: [0.03, 0.08, 0.03],
+            x: [0, -40, 0],
+            y: [0, 30, 0]
           }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-[10%] right-[-10%] w-[900px] h-[900px] bg-udsm-gold/20 rounded-full blur-[180px]"
+          className="absolute bottom-[10%] right-[-10%] w-[700px] h-[700px] bg-udsm-gold/15 rounded-full blur-[120px]"
         />
       </div>
 
@@ -152,7 +148,7 @@ const Hero = () => {
               visible: { opacity: 1 }
             }}
           >
-            <h1 className="text-lg md:text-2xl lg:text-3xl font-black text-white tracking-[0.2em] uppercase mb-1 drop-shadow-2xl flex flex-wrap justify-center gap-x-4 md:gap-x-6">
+            <h1 className="text-xs md:text-base lg:text-lg font-black text-white tracking-[0.2em] uppercase mb-1 drop-shadow-2xl flex flex-wrap justify-center gap-x-4 md:gap-x-6">
               {titleWords.slice(0, 3).map((word, i) => (
                 <motion.span
                   key={i}
@@ -166,7 +162,7 @@ const Hero = () => {
                 </motion.span>
               ))}
             </h1>
-            <h1 className="text-4xl md:text-6xl lg:text-8xl font-black text-udsm-gold tracking-tighter uppercase mb-4 drop-shadow-2xl flex flex-wrap justify-center gap-x-4 md:gap-x-8">
+            <h1 className="text-2xl md:text-4xl lg:text-6xl font-black text-udsm-gold tracking-tighter uppercase mb-4 drop-shadow-2xl flex flex-wrap justify-center gap-x-4 md:gap-x-8">
               {titleWords.slice(3).map((word, i) => (
                 <motion.span
                   key={i}
@@ -194,7 +190,7 @@ const Hero = () => {
             }}
             transition={{ duration: 1, delay: 0.5 }}
           >
-            <h2 className="text-lg md:text-2xl lg:text-3xl font-black text-white italic drop-shadow-xl tracking-tight">
+            <h2 className="text-sm md:text-lg lg:text-xl font-black text-white italic drop-shadow-xl tracking-tight">
               {"Empowering Dreams".split(' ').map((word, i) => (
                 <motion.span
                   key={i}
@@ -214,7 +210,7 @@ const Hero = () => {
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 }
             }}
-            className="text-xl md:text-2xl text-gray-200 font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-md"
+            className="text-base md:text-lg text-gray-200 font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-md"
           >
             {heroContent.subtitle}
           </motion.p>
@@ -229,16 +225,16 @@ const Hero = () => {
             <Button
               onClick={() => scrollToSection('programs')}
               size="lg"
-              className="w-full sm:w-auto bg-udsm-blue hover:bg-blue-700 text-white shadow-[0_10px_30px_rgba(8,100,175,0.2)] px-10 py-7 text-lg font-black rounded-2xl group transition-all uppercase tracking-widest"
+              className="w-full sm:w-auto bg-udsm-blue hover:bg-blue-700 text-white shadow-[0_10px_30px_rgba(8,100,175,0.15)] px-4 py-2.5 text-[10px] font-black rounded-lg group transition-all uppercase tracking-widest"
             >
               Explore Programs
-              <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
             </Button>
             <Button
               onClick={() => navigate('/propose')}
               size="lg"
               variant="outline"
-              className="w-full sm:w-auto border-2 border-udsm-gold text-udsm-gold hover:bg-udsm-gold hover:text-black px-10 py-7 text-lg font-black rounded-2xl transition-all shadow-lg backdrop-blur-md bg-udsm-gold/5 uppercase tracking-widest"
+              className="w-full sm:w-auto border-2 border-udsm-gold text-udsm-gold hover:bg-udsm-gold hover:text-black px-4 py-2.5 text-[10px] font-black rounded-lg transition-all shadow-lg backdrop-blur-md bg-udsm-gold/5 uppercase tracking-widest"
             >
               Propose a Project
             </Button>
@@ -253,7 +249,6 @@ const Hero = () => {
         transition={{ delay: 2, duration: 1 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
       >
-        <p className="text-white/50 text-[10px] font-black uppercase tracking-[0.3em]">Scroll</p>
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}

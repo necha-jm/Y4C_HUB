@@ -16,13 +16,15 @@ public class CoordinatorService {
     private final TimetableRepository timetableRepository;
     private final ProjectRepository projectRepository;
     private final EventRepository eventRepository;
+    private final PartnerRequestRepository partnerRequestRepository;
 
-    public CoordinatorService(UserRepository userRepository, EmailService emailService, TimetableRepository timetableRepository, ProjectRepository projectRepository, EventRepository eventRepository) {
+    public CoordinatorService(UserRepository userRepository, EmailService emailService, TimetableRepository timetableRepository, ProjectRepository projectRepository, EventRepository eventRepository, PartnerRequestRepository partnerRequestRepository) {
         this.userRepository = userRepository;
         this.emailService = emailService;
         this.timetableRepository = timetableRepository;
         this.projectRepository = projectRepository;
         this.eventRepository = eventRepository;
+        this.partnerRequestRepository = partnerRequestRepository;
     }
 
     public Map<String, Object> getDashboardStats() {
@@ -128,5 +130,37 @@ public class CoordinatorService {
 
     public Event createEvent(Event event) {
         return eventRepository.save(event);
+    }
+
+    public List<PartnerRequest> getPendingPartners() {
+        return partnerRequestRepository.findByStatus("PENDING");
+    }
+
+    public PartnerRequest approvePartner(Long partnerId) {
+        PartnerRequest request = partnerRequestRepository.findById(partnerId)
+                .orElseThrow(() -> new RuntimeException("Partner request not found"));
+        request.setStatus("APPROVED");
+        return partnerRequestRepository.save(request);
+    }
+
+    public PartnerRequest publishPartner(Long partnerId) {
+        PartnerRequest request = partnerRequestRepository.findById(partnerId)
+                .orElseThrow(() -> new RuntimeException("Partner request not found"));
+        request.setStatus("APPROVED");
+        request.setIsPublished(true);
+        return partnerRequestRepository.save(request);
+    }
+
+    public List<PartnerRequest> getPublishedPartners() {
+        return partnerRequestRepository.findByIsPublishedTrue();
+    }
+
+    public void deletePartnerRequest(Long partnerId) {
+        partnerRequestRepository.deleteById(partnerId);
+    }
+
+    public PartnerRequest submitPartnerRequest(PartnerRequest request) {
+        request.setStatus("PENDING");
+        return partnerRequestRepository.save(request);
     }
 }
