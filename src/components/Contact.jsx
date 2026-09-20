@@ -26,14 +26,14 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-32 px-4 relative overflow-hidden bg-white dark:bg-gray-950">
+    <section id="contact" className="py-12 md:py-16 px-4 relative overflow-hidden bg-white dark:bg-gray-950">
       <div className="container mx-auto relative z-10">
         <div className="text-center max-w-4xl mx-auto mb-16 space-y-6">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white tracking-tight"
+            className="text-3xl md:text-4xl lg:text-5xl font-black text-udsm-blue dark:text-white tracking-tight"
           >
             Get In <span className="bg-gradient-to-r from-udsm-blue to-forest-green bg-clip-text text-transparent">Touch</span>
           </motion.h2>

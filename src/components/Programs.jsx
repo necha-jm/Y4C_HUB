@@ -17,7 +17,7 @@ const Programs = () => {
       <div className="container mx-auto">
         <div className="text-center max-w-4xl mx-auto mb-24 space-y-6">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="space-y-4">
-            <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white tracking-tight">Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-udsm-blue to-forest-green">Programs</span></h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-udsm-blue dark:text-white tracking-tight">Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-udsm-blue to-forest-green">Programs</span></h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 font-medium">Transformative journeys designed to unlock your potential and build the future.</p>
           </motion.div>
         </div>

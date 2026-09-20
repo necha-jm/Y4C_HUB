@@ -77,28 +77,19 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative h-screen min-h-[600px] w-full flex items-center justify-center overflow-hidden bg-gray-900 pt-[100px] md:pt-[140px]">
-      {/* Background Image with AnimatePresence for smooth cross-fade */}
+    <section id="home" className="relative h-screen min-h-[600px] w-full flex items-center justify-center overflow-hidden bg-gray-950 pt-[100px] md:pt-[140px]">
+      {/* Background Image - Static Single Image layout */}
       <div className="absolute inset-0 z-0">
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={index}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 3, ease: "easeInOut" }}
-            className="absolute inset-0"
-          >
-            <img
-              src={currentImages[index]}
-              alt="Youth Innovation background"
-              className="w-full h-full object-cover"
-            />
-            {/* Multi-layered Premium Overlay - lightened for transparency */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60" />
-            <div className="absolute inset-0 bg-udsm-blue/5 mix-blend-overlay" />
-          </motion.div>
-        </AnimatePresence>
+        <div className="absolute inset-0">
+          <img
+            src={currentImages[0]}
+            alt="Youth Innovation background"
+            className="w-full h-full object-cover"
+          />
+          {/* Multi-layered Premium Overlay - lightened for transparency */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60" />
+          <div className="absolute inset-0 bg-udsm-blue/5 mix-blend-overlay" />
+        </div>
       </div>
 
       {/* Dynamic Background Mesh (Reduced blur for clarity) */}
@@ -190,14 +181,14 @@ const Hero = () => {
             }}
             transition={{ duration: 1, delay: 0.5 }}
           >
-            <h2 className="text-sm md:text-lg lg:text-xl font-black text-white italic drop-shadow-xl tracking-tight">
+            <h2 className="text-xl md:text-3xl lg:text-4xl font-black text-white italic drop-shadow-xl tracking-wide">
               {"Empowering Dreams".split(' ').map((word, i) => (
                 <motion.span
                   key={i}
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.8 + i * 0.2, duration: 0.5 }}
-                  className={cn("inline-block mr-4", word === 'Dreams' && "bg-gradient-to-r from-udsm-gold to-white bg-clip-text text-transparent")}
+                  className={cn("inline-block mr-4", word === 'Dreams' && "bg-gradient-to-r from-udsm-gold via-amber-300 to-udsm-gold bg-clip-text text-transparent drop-shadow-[0_4px_12px_rgba(251,191,36,0.3)] font-extrabold")}
                 >
                   {word}
                 </motion.span>
@@ -210,7 +201,7 @@ const Hero = () => {
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 }
             }}
-            className="text-base md:text-lg text-gray-200 font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-md"
+            className="text-lg md:text-xl text-white font-bold max-w-3xl mx-auto leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] px-4"
           >
             {heroContent.subtitle}
           </motion.p>

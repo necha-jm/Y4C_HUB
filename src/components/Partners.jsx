@@ -5,7 +5,6 @@ import apiClient from '@/core/apiClient';
 const defaultPartners = [
   { name: 'University of Dar es Salaam', logo: '/Images/udsm-logo.png' },
   { name: 'UNICEF', logo: '/Images/unicef.png' },
-  { name: 'Y4C Innovation Lab', logo: '/Images/y4c_logo.png' },
   { name: 'UDSM CoICT', logo: '/Images/udsm-logo.png' },
   { name: 'UNICEF Tanzania', logo: '/Images/unicef.png' },
 ];

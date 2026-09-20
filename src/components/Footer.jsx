@@ -37,7 +37,7 @@ const Footer = () => {
       whileInView="visible"
       viewport={{ once: true }}
       variants={containerVariants}
-      className="relative bg-gray-950 text-white py-20 px-4 overflow-hidden"
+      className="relative bg-gray-950 text-white py-4 px-4 overflow-hidden"
     >
       {/* Animated Background Elements */}
       <motion.div
@@ -68,8 +68,8 @@ const Footer = () => {
       />
 
       <div className="container mx-auto px-4 relative z-10 max-w-6xl">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          <motion.div variants={itemVariants} className="space-y-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-2">
+          <motion.div variants={itemVariants} className="space-y-2">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3">
                 <Logo iconClassName="h-12 w-12" textClassName="text-white text-lg" />
@@ -94,9 +94,9 @@ const Footer = () => {
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="space-y-6">
-            <h4 className="text-lg font-black uppercase tracking-widest text-udsm-gold">Quick Links</h4>
-            <ul className="space-y-4">
+          <motion.div variants={itemVariants} className="space-y-2">
+            <h4 className="text-base font-black uppercase tracking-widest text-udsm-gold">Quick Links</h4>
+            <ul className="space-y-1">
               {['About Us', 'Programs', 'Events', 'Resources'].map((item) => (
                 <li key={item}>
                   <a
@@ -111,9 +111,9 @@ const Footer = () => {
             </ul>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="space-y-6">
-            <h4 className="text-lg font-black uppercase tracking-widest text-udsm-gold">Support</h4>
-            <ul className="space-y-4">
+          <motion.div variants={itemVariants} className="space-y-2">
+            <h4 className="text-base font-black uppercase tracking-widest text-udsm-gold">Support</h4>
+            <ul className="space-y-1">
               <li>
                 <Link to="/contact" className="text-gray-400 hover:text-white transition-colors flex items-center group font-bold text-sm">
                   <span className="w-0 group-hover:w-4 h-[2px] bg-udsm-blue mr-0 group-hover:mr-2 transition-all duration-300" />
@@ -131,9 +131,9 @@ const Footer = () => {
             </ul>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="space-y-6">
-            <h4 className="text-lg font-black uppercase tracking-widest text-udsm-gold">Contact Info</h4>
-            <div className="space-y-4 text-sm font-medium">
+          <motion.div variants={itemVariants} className="space-y-2">
+            <h4 className="text-base font-black uppercase tracking-widest text-udsm-gold">Contact Info</h4>
+            <div className="space-y-1.5 text-sm font-medium">
                 <a
                   href="mailto:y4c@udsm.ac.tz"
                   className="flex items-center gap-3 text-gray-400 group cursor-pointer hover:text-white transition-colors"
@@ -147,17 +147,17 @@ const Footer = () => {
                   Room B208, Block B, UDSM - CoICT Kijitonyama Campus
                 </p>
             </div>
-            <div className="pt-4">
-              <div className="p-6 bg-gradient-to-br from-udsm-blue/20 to-forest-green/20 rounded-3xl border border-white/10 backdrop-blur-sm">
-                <p className="text-xs font-black text-udsm-gold uppercase mb-3 tracking-widest">Weekly Newsletter</p>
+            <div className="pt-1">
+              <div className="p-3 bg-gradient-to-br from-udsm-blue/20 to-forest-green/20 rounded-xl border border-white/10 backdrop-blur-sm">
+                <p className="text-[10px] font-black text-udsm-gold uppercase mb-1.5 tracking-widest">Weekly Newsletter</p>
                 <div className="flex gap-2">
                   <input
                     type="email"
                     placeholder="Innovation updates..."
-                    className="bg-black/20 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-udsm-blue w-full"
+                    className="bg-black/20 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-udsm-blue w-full"
                   />
-                  <button className="bg-udsm-blue hover:bg-blue-700 p-2.5 rounded-xl transition-all shadow-lg hover:scale-105 active:scale-95">
-                    <ExternalLink className="h-4 w-4" />
+                  <button className="bg-udsm-blue hover:bg-blue-700 p-1.5 rounded-xl transition-all shadow-lg hover:scale-105 active:scale-95">
+                    <ExternalLink className="h-3.5 w-3.5" />
                   </button>
                 </div>
               </div>
@@ -167,16 +167,11 @@ const Footer = () => {
 
         <motion.div
           variants={itemVariants}
-          className="border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6"
+          className="border-t border-white/10 pt-2 flex justify-center items-center"
         >
-          <p className="text-gray-500 text-xs">
+          <p className="text-gray-500 text-xs text-center">
             © {currentYear} <span className="text-white font-bold">Youth For Change Innovation Lab</span>. All rights reserved.
           </p>
-          <div className="flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-gray-600">
-            <span className="hover:text-udsm-blue cursor-pointer transition-colors">Innovate</span>
-            <span className="hover:text-forest-green cursor-pointer transition-colors">Train</span>
-            <span className="hover:text-udsm-gold cursor-pointer transition-colors">Mentor</span>
-          </div>
         </motion.div>
       </div>
     </motion.footer>
