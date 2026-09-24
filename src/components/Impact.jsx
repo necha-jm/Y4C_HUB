@@ -38,7 +38,7 @@ const Impact = () => {
   ];
 
   return (
-    <section id="impact" className="py-32 px-4 relative overflow-hidden bg-[#0a0f1a] text-white">
+    <section id="impact" className="py-32 px-4 relative overflow-hidden bg-white dark:bg-[#0a0f1a] text-gray-900 dark:text-white transition-colors duration-500">
       <div className="container mx-auto">
         <div className="text-center max-w-4xl mx-auto mb-24 space-y-6">
           <motion.div
@@ -47,7 +47,7 @@ const Impact = () => {
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white tracking-tight">
               Our <span className="bg-gradient-to-r from-udsm-blue via-udsm-gold to-forest-green bg-clip-text text-transparent">Impact</span>
             </h2>
           </motion.div>
@@ -64,16 +64,16 @@ const Impact = () => {
               whileHover={{ y: -10 }}
               className="relative group"
             >
-              <div className="bg-[#111827] rounded-3xl p-8 text-center shadow-2xl transition-all border border-gray-800 overflow-hidden relative h-full flex flex-col justify-center">
+              <div className="bg-white dark:bg-[#111827] rounded-3xl p-8 text-center shadow-xl dark:shadow-2xl transition-all border border-gray-100 dark:border-gray-800 overflow-hidden relative h-full flex flex-col justify-center">
                 <div className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${metric.color}`} />
                 <div className={`bg-gradient-to-br ${metric.color} w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-lg`}>
                   <metric.icon className="h-8 w-8 text-white" />
                 </div>
-                <p className="text-5xl font-black text-white mb-3 tracking-tighter">
+                <p className="text-5xl font-black text-gray-900 dark:text-white mb-3 tracking-tighter">
                   <AnimatedCounter value={metric.value} />
                 </p>
-                <p className="text-lg font-bold text-gray-300 mb-2 uppercase tracking-widest">{metric.label}</p>
-                <p className="text-xs text-gray-500 leading-relaxed font-medium">{metric.description}</p>
+                <p className="text-lg font-bold text-gray-800 dark:text-gray-300 mb-2 uppercase tracking-widest">{metric.label}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium">{metric.description}</p>
               </div>
             </motion.div>
           ))}

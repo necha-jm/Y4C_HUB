@@ -29,7 +29,7 @@ const NavLink = ({ children, onClick, active }) => (
   </motion.button>
 );
 
-const Header = ({ onLoginClick, isAuthenticated }) => {
+const Header = ({ onLoginClick, isAuthenticated, onLogout }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProgramsOpen, setIsProgramsOpen] = useState(false);
@@ -167,18 +167,67 @@ const Header = ({ onLoginClick, isAuthenticated }) => {
                   {theme === 'light' ? <Moon className="h-3.5 w-3.5" /> : <Sun className="h-3.5 w-3.5" />}
                 </motion.button>
                 {isAuthenticated ? (
-                  <Button onClick={() => navigate('/dashboard')} className="bg-white text-udsm-blue hover:bg-gray-100 shadow-xl rounded-lg text-[9px] font-black uppercase tracking-widest px-4 h-9 transition-all active:scale-95">Dashboard</Button>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      onClick={() => navigate('/dashboard')}
+                      className={cn(
+                        "shadow-xl rounded-lg text-[9px] font-black uppercase tracking-widest px-4 h-9 transition-all active:scale-95",
+                        location.pathname === '/dashboard'
+                          ? "bg-udsm-gold text-black hover:bg-amber-400"
+                          : "bg-white text-udsm-blue hover:bg-gray-100"
+                      )}
+                    >
+                      Dashboard
+                    </Button>
+                    {onLogout && (
+                      <Button
+                        onClick={onLogout}
+                        variant="outline"
+                        className="border-white/20 text-white hover:bg-red-600 hover:border-red-600 rounded-lg text-[9px] font-black uppercase tracking-widest px-3 h-9 transition-all active:scale-95"
+                      >
+                        Logout
+                      </Button>
+                    )}
+                  </div>
                 ) : (
                   <Button onClick={onLoginClick} className="bg-udsm-gold hover:bg-amber-400 text-black shadow-xl rounded-lg text-[9px] font-black uppercase tracking-widest px-4 h-9 transition-all active:scale-95">Login</Button>
                 )}
               </div>
 
-              {/* Mobile Toggle */}
-              <div className="flex items-center gap-3 lg:hidden">
-                 <button onClick={toggleTheme} className="p-2 text-white">{theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}</button>
-                 <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-white bg-white/10 rounded-xl border border-white/10">
-                   {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                 </button>
+              {/* Mobile Actions & Menu Toggle */}
+              <div className="flex items-center gap-2 lg:hidden">
+                <button onClick={toggleTheme} className="p-2 text-white hover:text-udsm-gold transition-colors">
+                  {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+                </button>
+
+                {isAuthenticated ? (
+                  <Button
+                    onClick={() => navigate('/dashboard')}
+                    className={cn(
+                      "text-[10px] font-black uppercase tracking-wider px-3 h-8 rounded-lg shadow-md transition-all active:scale-95",
+                      location.pathname === '/dashboard'
+                        ? "bg-udsm-gold text-black hover:bg-amber-400"
+                        : "bg-white text-udsm-blue hover:bg-gray-100"
+                    )}
+                  >
+                    Dashboard
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={onLoginClick}
+                    className="bg-udsm-gold hover:bg-amber-400 text-black text-[10px] font-black uppercase tracking-wider px-3 h-8 rounded-lg shadow-md transition-all active:scale-95"
+                  >
+                    Login
+                  </Button>
+                )}
+
+                <button
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="p-2 text-white bg-white/10 rounded-xl border border-white/10 ml-1 hover:bg-white/20 transition-all"
+                  aria-label="Toggle mobile navigation menu"
+                >
+                  {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                </button>
               </div>
             </div>
           </div>
@@ -192,7 +241,7 @@ const Header = ({ onLoginClick, isAuthenticated }) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-udsm-blue shadow-2xl border-b border-white/10 overflow-hidden"
+            className="lg:hidden bg-udsm-blue/98 backdrop-blur-2xl shadow-2xl border-b border-white/10 max-h-[82vh] overflow-y-auto custom-scrollbar"
           >
              <div className="flex flex-col">
                {[
@@ -205,24 +254,13 @@ const Header = ({ onLoginClick, isAuthenticated }) => {
                    key={idx}
                    initial={{ opacity: 0, x: -20 }}
                    animate={{ opacity: 1, x: 0 }}
-                   transition={{ delay: idx * 0.03 }}
+                   transition={{ delay: idx * 0.02 }}
                    onClick={() => item.path ? navigate(item.path) : scrollToSection(item.id)}
-                   className="w-full text-left px-8 py-5 text-white/90 hover:text-white hover:bg-white/5 transition-all font-bold uppercase tracking-[0.15em] text-[11px] border-b border-white/10 last:border-none"
+                   className="w-full text-left px-6 py-4 text-white/90 hover:text-white hover:bg-white/10 transition-all font-bold uppercase tracking-[0.15em] text-[11px] border-b border-white/10 last:border-none"
                  >
                    {item.name}
                  </motion.button>
                ))}
-               <div className="p-6 bg-udsm-blue/50">
-                 {isAuthenticated ? (
-                   <Button onClick={() => navigate('/dashboard')} className="w-full bg-white text-udsm-blue hover:bg-gray-100 font-black uppercase py-7 rounded-2xl shadow-xl transition-all active:scale-95">
-                     Dashboard
-                   </Button>
-                 ) : (
-                   <Button onClick={onLoginClick} className="w-full bg-udsm-gold hover:bg-amber-400 text-black font-black uppercase py-7 rounded-2xl shadow-xl transition-all active:scale-95">
-                     Login
-                   </Button>
-                 )}
-               </div>
              </div>
           </motion.div>
         )}

@@ -235,29 +235,6 @@ const MemberDashboard = ({ user, onLogout }) => {
 
   return (
     <div className="flex flex-col h-screen bg-slate-50 dark:bg-gray-950 overflow-hidden">
-      {/* Premium Header (Blue Bar from Landing Page) */}
-      <div className="bg-udsm-blue text-white py-3 px-8 border-b border-white/10 hidden md:block rounded-b-[1.5rem] shadow-lg relative z-[60]">
-        <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
-          <div className="flex items-center w-32 cursor-pointer" onClick={() => navigate('/')}>
-             <img src="/Images/udsm-logo.png" alt="UDSM Logo" className="h-8 lg:h-10 w-auto object-contain drop-shadow-lg" />
-          </div>
-
-          <div className="text-center flex-grow">
-            <h1 className="text-xs lg:text-lg font-black uppercase tracking-[0.2em] leading-none mb-0.5 drop-shadow-2xl">
-              <span className="text-white">Youth For Children</span>
-              <span className="text-white ml-2">Innovation Lab</span>
-            </h1>
-            <div className="flex flex-col opacity-90 leading-none space-y-0.5">
-              <span className="text-[6px] lg:text-[8px] font-bold uppercase tracking-[0.3em] text-udsm-gold">College of Information and Communication Technologies</span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-end w-32">
-             <img src="/Images/y4c_logo.png" alt="Y4C Logo" className="h-8 lg:h-10 w-auto object-contain drop-shadow-lg" />
-          </div>
-        </div>
-      </div>
-
       <div className="flex flex-1 overflow-hidden relative">
         {/* Desktop Sidebar */}
         <aside className="hidden lg:flex w-72 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 flex-col z-50 shadow-xl">
