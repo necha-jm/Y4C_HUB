@@ -52,7 +52,7 @@ const ResourcesDetail = () => {
         <meta name="description" content={`Explore the ${resource.title} available at Y4C Innovation Lab.`} />
       </Helmet>
       <Header />
-      <main className="bg-white pt-20 lg:pt-28">
+      <main className="bg-white pt-20 lg:pt-24">
         <Breadcrumbs />
         <div className="container mx-auto px-4 pb-16">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

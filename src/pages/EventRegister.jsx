@@ -43,7 +43,7 @@ const EventRegister = () => {
         <meta name="description" content={`Register for the ${event.title} at Y4C Innovation Lab.`} />
       </Helmet>
       <Header />
-      <main className="bg-slate-50 dark:bg-gray-950 pt-20 lg:pt-28">
+      <main className="bg-slate-50 dark:bg-gray-950 pt-20 lg:pt-24">
         <Breadcrumbs />
         <div className="container mx-auto px-4 pb-16">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

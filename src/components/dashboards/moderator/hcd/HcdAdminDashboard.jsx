@@ -161,9 +161,9 @@ const HcdAdminDashboard = () => {
         )}
       </AnimatePresence>
 
-      <div className="grid lg:grid-cols-3 gap-10">
+      <div className="w-full space-y-8">
         {/* Insights Section */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="w-full space-y-8">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-2xl font-black text-gray-900 dark:text-white flex items-center gap-3 tracking-tight">
@@ -211,35 +211,6 @@ const HcdAdminDashboard = () => {
               ))}
             </div>
           )}
-        </div>
-
-        {/* Action History */}
-        <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md p-10 rounded-[3.5rem] shadow-2xl border border-gray-50 dark:border-gray-800 h-fit sticky top-24">
-           <h3 className="text-xl font-black text-gray-900 dark:text-white mb-10 flex items-center gap-3">
-             <div className="w-2 h-8 bg-udsm-blue rounded-full" />
-             Strategic Log
-           </h3>
-           <div className="space-y-10">
-              {[
-                { t: 'Prioritized Bug #104', d: 'High impact on student registration', c: 'bg-udsm-blue' },
-                { t: 'User Research Updated', d: 'Added Graduate Persona', c: 'bg-udsm-gold' },
-                { t: 'Resolved UI Friction', d: 'Program detail page layout', c: 'bg-green-500' },
-              ].map((item, i) => (
-                <div key={i} className="flex gap-6 group">
-                   <div className="flex flex-col items-center">
-                     <div className={cn("w-4 h-4 rounded-full shadow-[0_0_10px_rgba(0,0,0,0.1)] group-hover:scale-125 transition-transform", item.c)} />
-                     {i < 2 && <div className="w-0.5 h-16 bg-gray-100 dark:bg-gray-800 mt-2" />}
-                   </div>
-                   <div className="-mt-1">
-                     <p className="font-black text-gray-900 dark:text-white tracking-tight">{item.t}</p>
-                     <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest mt-1.5 leading-relaxed">{item.d}</p>
-                   </div>
-                </div>
-              ))}
-           </div>
-           <div className="mt-12 pt-8 border-t border-gray-50 dark:border-gray-800">
-             <Button variant="ghost" className="w-full font-black text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-udsm-blue transition-colors">View Full History</Button>
-           </div>
         </div>
       </div>
     </div>

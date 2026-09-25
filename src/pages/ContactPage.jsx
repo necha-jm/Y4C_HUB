@@ -13,10 +13,8 @@ const ContactPage = () => {
         <meta name="description" content="Get in touch with the Youth For Children Innovation Lab. We're here to answer your questions and explore collaboration opportunities." />
       </Helmet>
       <Header />
-      <main className="min-h-screen bg-slate-50 dark:bg-gray-950 pt-24 lg:pt-32">
-        <div className="container mx-auto px-4 mb-4">
-          <Breadcrumbs />
-        </div>
+      <main className="min-h-screen bg-slate-50 dark:bg-gray-950 pt-20 lg:pt-24">
+        <Breadcrumbs />
         <Contact />
       </main>
       <Footer />

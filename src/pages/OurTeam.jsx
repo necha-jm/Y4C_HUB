@@ -90,7 +90,7 @@ const OurTeam = () => {
         <meta name="description" content="Meet the passionate team behind the Y4C Innovation Lab." />
       </Helmet>
       <Header />
-      <main className="bg-white/50 dark:bg-gray-950/50 backdrop-blur-sm min-h-screen pt-20 lg:pt-28 pb-20">
+      <main className="bg-white/50 dark:bg-gray-950/50 backdrop-blur-sm min-h-screen pt-20 lg:pt-24 pb-20">
         <Breadcrumbs />
         <div className="container mx-auto px-4 py-20 text-center">
           <motion.h1 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl lg:text-7xl font-black text-udsm-blue dark:text-white mb-6 tracking-tighter">

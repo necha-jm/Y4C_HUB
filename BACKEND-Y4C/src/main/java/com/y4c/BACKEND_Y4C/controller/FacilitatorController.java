@@ -23,25 +23,47 @@ public class FacilitatorController {
         return ResponseEntity.ok(facilitatorService.getPendingUsers());
     }
 
+    @GetMapping("/users/active")
+    public ResponseEntity<List<User>> getActiveUsers() {
+        return ResponseEntity.ok(facilitatorService.getActiveUsers());
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(facilitatorService.getAllUsers());
+    }
+
     @GetMapping("/stats")
     public ResponseEntity<Map<String, Object>> getStats() {
         return ResponseEntity.ok(facilitatorService.getDashboardStats());
     }
 
     @PutMapping("/users/{id}/admit")
-    public ResponseEntity<User> admitUser(@PathVariable Long id) {
-        return ResponseEntity.ok(facilitatorService.admitUser(id));
+    public ResponseEntity<?> admitUser(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(facilitatorService.admitUser(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(facilitatorService.createActiveUser(user));
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        try {
+            return ResponseEntity.ok(facilitatorService.createActiveUser(user));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        facilitatorService.deleteUser(id);
-        return ResponseEntity.ok().build();
+        try {
+            facilitatorService.deleteUser(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping("/events")

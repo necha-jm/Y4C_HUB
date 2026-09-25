@@ -127,7 +127,7 @@ const ProgramDetail = () => {
         <meta name="description" content={`Learn more about the ${program.title} program at Y4C Innovation Lab.`} />
       </Helmet>
       <Header />
-      <main className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 pt-20 lg:pt-28">
+      <main className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 pt-20 lg:pt-24">
         <Breadcrumbs />
         <div className="container mx-auto px-4 pb-16">
           <div className="flex flex-col lg:flex-row gap-12">

@@ -13,7 +13,7 @@ const Breadcrumbs = () => {
   const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).replace(/-/g, ' ');
 
   return (
-    <div className="container mx-auto px-4 pt-28 pb-4">
+    <div className="container mx-auto px-4 pt-3 pb-3">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
           <li className="inline-flex items-center">

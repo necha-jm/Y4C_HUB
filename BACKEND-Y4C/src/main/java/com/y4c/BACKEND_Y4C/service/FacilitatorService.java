@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class FacilitatorService {
@@ -72,9 +73,22 @@ public class FacilitatorService {
         return userRepository.findByStatus("PENDING");
     }
 
+    public List<User> getActiveUsers() {
+        return userRepository.findByStatus("ACTIVE");
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     public User admitUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         user.setStatus("ACTIVE");
+        if (user.getRole() == null || user.getRole().trim().isEmpty() || "USER".equalsIgnoreCase(user.getRole())) {
+            user.setRole("MEMBER");
+        } else {
+            user.setRole(user.getRole().toUpperCase());
+        }
         User savedUser = userRepository.save(user);
         
         // Notify user via email
@@ -84,15 +98,49 @@ public class FacilitatorService {
     }
 
     public User createActiveUser(User user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new RuntimeException("User already exists");
+        if (user.getEmail() != null && !user.getEmail().trim().isEmpty()) {
+            Optional<User> existingOpt = userRepository.findByEmail(user.getEmail().trim());
+            if (existingOpt.isPresent()) {
+                User existing = existingOpt.get();
+                existing.setStatus("ACTIVE");
+                if (user.getRole() != null && !user.getRole().trim().isEmpty()) {
+                    existing.setRole(user.getRole().toUpperCase());
+                } else {
+                    existing.setRole("MEMBER");
+                }
+                if (user.getName() != null && !user.getName().trim().isEmpty()) {
+                    existing.setName(user.getName());
+                }
+                if (user.getPassword() != null && !user.getPassword().trim().isEmpty()) {
+                    existing.setPassword(user.getPassword());
+                }
+                if (user.getUniversity() != null) existing.setUniversity(user.getUniversity());
+                if (user.getProgram() != null) existing.setProgram(user.getProgram());
+
+                User savedUser = userRepository.save(existing);
+                try {
+                    emailService.sendMemberAdmissionNotification(savedUser.getEmail(), savedUser.getName());
+                } catch (Exception e) {
+                    // Ignore email sending error if smtp fails
+                }
+                return savedUser;
+            }
         }
+
         user.setStatus("ACTIVE");
+        if (user.getRole() == null || user.getRole().trim().isEmpty()) {
+            user.setRole("MEMBER");
+        } else {
+            user.setRole(user.getRole().toUpperCase());
+        }
         User savedUser = userRepository.save(user);
-        
-        // Notify user via email
-        emailService.sendMemberAdmissionNotification(savedUser.getEmail(), savedUser.getName());
-        
+
+        try {
+            emailService.sendMemberAdmissionNotification(savedUser.getEmail(), savedUser.getName());
+        } catch (Exception e) {
+            // Ignore email sending error
+        }
+
         return savedUser;
     }
 
