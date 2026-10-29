@@ -45,11 +45,11 @@ public class AnalyticsController {
 
         List<GrantDistribution> grants = grantRepository.findAll();
         double totalGrantAmount = grants.stream()
-                .mapToDouble(g -> g.getAmountTzs() != null ? g.getAmountTzs() : 0.0)
+                .mapToDouble(g -> parseAmount(g.getAmountTsh()))
                 .sum();
-        String seedCapitalStr = String.format("%.1fM TZS", (38500000.0 + totalGrantAmount) / 1000000.0);
+        String seedCapitalStr = String.format(java.util.Locale.US, "%.1fM TZS", (38500000.0 + totalGrantAmount) / 1000000.0);
 
-        long activeVentures = Math.max(24, projectRepository.count() + hostingRepository.count());
+        long activeVentures = Math.max(24, projectRepository.count() + hostingRepository.count() + milestoneRepository.count());
 
         metrics.put("trainedYouth", totalTrained + "+");
         metrics.put("femaleInnovators", "48%");
@@ -71,5 +71,17 @@ public class AnalyticsController {
         metrics.put("demographics", demographics);
 
         return ResponseEntity.ok(metrics);
+    }
+
+    private double parseAmount(String amountStr) {
+        if (amountStr == null || amountStr.isBlank()) {
+            return 0.0;
+        }
+        try {
+            String cleaned = amountStr.replaceAll("[^0-9.]", "");
+            return cleaned.isEmpty() ? 0.0 : Double.parseDouble(cleaned);
+        } catch (Exception e) {
+            return 0.0;
+        }
     }
 }

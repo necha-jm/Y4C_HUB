@@ -71,11 +71,11 @@ const ImageUpload = ({ onUploadSuccess, currentImage, multiple = false }) => {
     <div className="space-y-4">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {previews.map((src, idx) => (
-          <div key={idx} className="relative aspect-square rounded-2xl overflow-hidden border border-gray-100 group">
+          <div key={idx} className="relative aspect-square rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 group shadow-sm bg-gray-100 dark:bg-gray-800">
             <img src={src} alt={`Upload ${idx}`} className="w-full h-full object-cover" />
             <button
               onClick={(e) => { e.preventDefault(); removeImage(idx); }}
-              className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute top-2 right-2 p-1.5 bg-red-600 text-white rounded-xl shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
             >
               <X className="h-4 w-4" />
             </button>
@@ -83,18 +83,18 @@ const ImageUpload = ({ onUploadSuccess, currentImage, multiple = false }) => {
         ))}
 
         {(multiple || previews.length === 0) && (
-          <label className="flex flex-col items-center justify-center aspect-square rounded-2xl border-2 border-dashed border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors">
-            <Upload className="h-8 w-8 text-gray-400 mb-2" />
-            <p className="text-[10px] font-black uppercase text-gray-400">Add Image</p>
+          <label className="flex flex-col items-center justify-center aspect-square rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800/60 hover:border-udsm-blue dark:hover:border-udsm-blue transition-all bg-white/50 dark:bg-gray-900/40 group">
+            <Upload className="h-7 w-7 text-gray-400 group-hover:text-udsm-blue transition-colors mb-2" />
+            <p className="text-[10px] font-black uppercase tracking-wider text-gray-500 dark:text-gray-400 group-hover:text-udsm-blue transition-colors">Add Image</p>
             <input type="file" className="hidden" accept="image/*" multiple={multiple} onChange={handleFileChange} />
           </label>
         )}
       </div>
 
       {isUploading && (
-        <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-2xl">
-          <Loader2 className="h-5 w-5 text-blue-600 animate-spin" />
-          <p className="text-xs font-black uppercase text-blue-600 tracking-widest">Processing Uploads...</p>
+        <div className="flex items-center gap-3 p-4 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/40 rounded-2xl">
+          <Loader2 className="h-5 w-5 text-udsm-blue animate-spin" />
+          <p className="text-xs font-black uppercase text-udsm-blue tracking-widest">Processing Uploads...</p>
         </div>
       )}
     </div>

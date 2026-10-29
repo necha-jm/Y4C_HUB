@@ -57,9 +57,23 @@ const handleMockFallback = (url, method, data) => {
     return { data: { message: 'Reset code sent to your email.' } };
   }
 
-  // Public
-  if (cleanUrl === '/public/events' || cleanUrl === '/events') {
+  // Events Management (Public, Coordinator, Facilitator)
+  if (cleanUrl === '/public/events' || cleanUrl === '/events' || cleanUrl === '/coordinator/events' || cleanUrl === '/facilitator/events') {
+    if (method === 'post') {
+      const newEv = mockStore.add('events', {
+        ...data,
+        isPublished: true,
+        createdAt: new Date().toISOString()
+      });
+      return { data: newEv };
+    }
     return { data: mockStore.get('events') };
+  }
+  if ((cleanUrl.startsWith('/events/') || cleanUrl.startsWith('/coordinator/events/') || cleanUrl.startsWith('/facilitator/events/')) && method === 'delete') {
+    const parts = cleanUrl.split('/');
+    const id = parts[parts.length - 1];
+    mockStore.delete('events', id);
+    return { data: { success: true } };
   }
 
   if (cleanUrl === '/public/experts') {
@@ -173,16 +187,25 @@ const handleMockFallback = (url, method, data) => {
     return { data: mockStore.update('users', id, { status: 'ACTIVE' }) };
   }
   if (cleanUrl === '/coordinator/projects/pending' || cleanUrl === '/facilitator/projects/pending') {
-    return {
-      data: [
-        { id: 101, title: "Smart Soil Moisture Mesh", innovatorName: "Amina Hassan", institution: "UDSM", category: "AgriTech", status: "PENDING", description: "Mesh network sensors for low-cost irrigation monitoring." },
-        { id: 102, title: "MamaCare Triage Bot", innovatorName: "Kelvin Shirima", institution: "DIT", category: "HealthTech", status: "PENDING", description: "Swahili-first triage bot for maternal healthcare clinics." }
-      ]
-    };
+    const list = mockStore.get('projects') || [];
+    return { data: list.filter(p => p.status === 'PENDING') };
+  }
+  if (cleanUrl === '/coordinator/projects/approved' || cleanUrl === '/facilitator/projects/approved') {
+    const list = mockStore.get('projects') || [];
+    return { data: list.filter(p => p.status === 'APPROVED') };
+  }
+  if (cleanUrl === '/coordinator/projects' || cleanUrl === '/facilitator/projects' || cleanUrl === '/projects') {
+    return { data: mockStore.get('projects') || [] };
   }
   if (cleanUrl.includes('/projects/') && cleanUrl.endsWith('/approve')) {
     const id = cleanUrl.split('/')[3];
-    return { data: { id, status: 'APPROVED' } };
+    const updated = mockStore.update('projects', id, { status: 'APPROVED' });
+    return { data: updated || { id, status: 'APPROVED' } };
+  }
+  if (cleanUrl.includes('/projects/') && cleanUrl.endsWith('/reject')) {
+    const id = cleanUrl.split('/')[3];
+    const updated = mockStore.update('projects', id, { status: 'REJECTED' });
+    return { data: updated || { id, status: 'REJECTED' } };
   }
   if (cleanUrl === '/coordinator/partners/pending') {
     return { data: [] };

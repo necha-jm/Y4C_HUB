@@ -36,4 +36,17 @@ public class GrantDistribution {
     public void setPurpose(String purpose) { this.purpose = purpose; }
     public String getReceiptUrl() { return receiptUrl; }
     public void setReceiptUrl(String receiptUrl) { this.receiptUrl = receiptUrl; }
+
+    @Transient
+    public Double getAmountTzs() {
+        if (amountTsh == null || amountTsh.isBlank()) {
+            return 0.0;
+        }
+        try {
+            String cleaned = amountTsh.replaceAll("[^0-9.]", "");
+            return cleaned.isEmpty() ? 0.0 : Double.parseDouble(cleaned);
+        } catch (Exception e) {
+            return 0.0;
+        }
+    }
 }

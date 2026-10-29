@@ -153,6 +153,64 @@ const initialData = {
       requestedAt: "2026-10-29T08:15:00Z",
       provisionedAt: null
     }
+  ],
+  projects: [
+    {
+      id: 101,
+      title: "Smart Soil Moisture Mesh",
+      innovatorName: "Amina Hassan",
+      innovatorEmail: "amina.h@gmail.com",
+      institution: "UDSM CoICT",
+      category: "AgriTech & IoT",
+      status: "PENDING",
+      submittedAt: "2026-10-27T10:00:00Z",
+      githubUrl: "https://github.com/amina-h/soil-moisture-mesh",
+      portfolioUrl: "https://soilmesh-udsm.org",
+      proposalPdfUrl: "/docs/proposal-soil-mesh.pdf",
+      description: "Mesh network sensors for low-cost irrigation monitoring and automated solar-powered valves across smallholder Tanzanian farms."
+    },
+    {
+      id: 102,
+      title: "MamaCare Triage Bot",
+      innovatorName: "Kelvin Shirima",
+      innovatorEmail: "kelvin.s@gmail.com",
+      institution: "Dar es Salaam Institute of Technology (DIT)",
+      category: "HealthTech & AI",
+      status: "PENDING",
+      submittedAt: "2026-10-28T14:20:00Z",
+      githubUrl: "https://github.com/kelvin-s/mamacare-bot",
+      portfolioUrl: "https://mamacare-preview.udsm.ac.tz",
+      proposalPdfUrl: "/docs/proposal-mamacare.pdf",
+      description: "Swahili-first triage bot for maternal healthcare clinics, antenatal appointment scheduling, and remote emergency triage."
+    },
+    {
+      id: 103,
+      title: "Lishe App - Smart Urban Agriculture",
+      innovatorName: "Michael Chen",
+      innovatorEmail: "michael.c@y4c.com",
+      institution: "UDSM",
+      category: "CleanTech & Agriculture",
+      status: "APPROVED",
+      submittedAt: "2026-10-22T08:00:00Z",
+      githubUrl: "https://github.com/udsm-innovators/lishe-app-telemetry",
+      portfolioUrl: "https://lishe.y4chub.udsm.ac.tz",
+      proposalPdfUrl: null,
+      description: "Hydroponic nutrient monitoring and urban farming distribution network for youth-run rooftop greenhouses."
+    },
+    {
+      id: 104,
+      title: "SolarTrack IoT Concentrator",
+      innovatorName: "Juma Bakari",
+      innovatorEmail: "juma.b@udsm.ac.tz",
+      institution: "Ardhi University",
+      category: "Renewable Energy",
+      status: "APPROVED",
+      submittedAt: "2026-10-18T11:30:00Z",
+      githubUrl: "https://github.com/juma-b/solartrack-telemetry",
+      portfolioUrl: null,
+      proposalPdfUrl: null,
+      description: "Dual-axis solar tracker with real-time GSM telemetry and battery state-of-health forecasting."
+    }
   ]
 };
 

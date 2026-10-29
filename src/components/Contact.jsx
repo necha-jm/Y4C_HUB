@@ -63,12 +63,12 @@ const Contact = () => {
             className="text-3xl font-black tracking-tight text-udsm-blue md:text-4xl lg:text-5xl dark:text-white"
           >
             Get In{' '}
-            <span className="bg-gradient-to-r from-udsm-blue to-forest-green bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-udsm-blue to-forest-green bg-clip-text text-transparent dark:from-sky-400 dark:to-emerald-400">
               Touch
             </span>
           </motion.h2>
 
-          <p className="text-xl font-medium text-gray-600 dark:text-gray-400">
+          <p className="text-xl font-medium text-gray-700 dark:text-gray-200">
             Have a question or want to collaborate? Send us a message.
           </p>
         </div>
@@ -91,9 +91,9 @@ const Contact = () => {
                 {/* Email */}
                 <a
                   href="mailto:y4c@udsm.ac.tz"
-                  className="group flex items-center gap-4 rounded-2xl border border-transparent p-4 transition-all hover:border-udsm-blue/10 hover:bg-udsm-blue/5"
+                  className="group flex items-center gap-4 rounded-2xl border border-transparent p-4 transition-all hover:border-udsm-blue/20 hover:bg-udsm-blue/5 dark:hover:border-sky-500/30 dark:hover:bg-gray-800/80"
                 >
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-udsm-blue/10 text-udsm-blue shadow-lg transition-all group-hover:bg-udsm-blue group-hover:text-white">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-udsm-blue/10 text-udsm-blue shadow-lg transition-all group-hover:bg-udsm-blue group-hover:text-white dark:bg-sky-500/20 dark:text-sky-300 dark:group-hover:bg-sky-500 dark:group-hover:text-gray-950">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-6 w-6"
@@ -111,10 +111,10 @@ const Contact = () => {
                   </div>
 
                   <div className="min-w-0">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+                    <p className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-300">
                       Email Us
                     </p>
-                    <p className="break-words font-bold text-gray-900 dark:text-gray-200">
+                    <p className="break-words text-base font-bold text-gray-900 dark:text-white">
                       y4c@udsm.ac.tz
                     </p>
                   </div>
@@ -122,7 +122,7 @@ const Contact = () => {
 
                 {/* Physical Location */}
                 <div className="flex items-center gap-4 rounded-2xl p-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-forest-green/10 text-forest-green shadow-lg">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-forest-green/10 text-forest-green shadow-lg dark:bg-emerald-500/20 dark:text-emerald-300">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-6 w-6"
@@ -146,10 +146,10 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+                    <p className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-300">
                       Visit Hub
                     </p>
-                    <p className="text-sm font-bold text-gray-900 dark:text-gray-200">
+                    <p className="text-base font-bold text-gray-900 dark:text-white">
                       Room B208, UDSM CoICT
                     </p>
                   </div>
@@ -158,13 +158,13 @@ const Contact = () => {
 
               {/* Operational Hours */}
               <div className="mt-8 border-t border-gray-100 pt-8 dark:border-gray-800">
-                <p className="mb-4 text-[10px] font-black uppercase tracking-[0.2em] text-udsm-gold">
+                <p className="mb-4 text-xs font-bold uppercase tracking-[0.15em] text-amber-600 dark:text-amber-400">
                   Operational Hours
                 </p>
 
-                <div className="flex items-center justify-between gap-3 text-sm font-bold text-gray-600 dark:text-gray-400">
+                <div className="flex items-center justify-between gap-3 text-sm font-bold text-gray-700 dark:text-gray-300">
                   <span>Mon - Fri</span>
-                  <span className="text-gray-900 dark:text-white">
+                  <span className="font-extrabold text-gray-900 dark:text-white">
                     08:00 - 16:00
                   </span>
                 </div>
@@ -185,7 +185,7 @@ const Contact = () => {
             >
               <div className="grid gap-8 md:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="ml-1 text-xs font-black uppercase tracking-widest text-gray-400">
+                  <label className="ml-1 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-200">
                     Full Name
                   </label>
                   <Input
@@ -193,12 +193,12 @@ const Contact = () => {
                     name="fullName"
                     placeholder="Innovation Lead"
                     required
-                    className="h-14 rounded-xl border-gray-100 bg-gray-50/50 px-6 font-bold dark:border-gray-700 dark:bg-gray-800/50"
+                    className="h-14 rounded-xl border-gray-200 bg-gray-50/70 px-6 font-semibold text-gray-900 placeholder:text-gray-400 focus:border-udsm-blue focus:bg-white focus:ring-2 focus:ring-udsm-blue/20 dark:border-gray-700 dark:bg-gray-800/80 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-sky-400 dark:focus:bg-gray-800 dark:focus:ring-sky-400/20"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="ml-1 text-xs font-black uppercase tracking-widest text-gray-400">
+                  <label className="ml-1 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-200">
                     Email Address
                   </label>
                   <Input
@@ -206,14 +206,14 @@ const Contact = () => {
                     name="email"
                     placeholder="name@y4clab.com"
                     required
-                    className="h-14 rounded-xl border-gray-100 bg-gray-50/50 px-6 font-bold dark:border-gray-700 dark:bg-gray-800/50"
+                    className="h-14 rounded-xl border-gray-200 bg-gray-50/70 px-6 font-semibold text-gray-900 placeholder:text-gray-400 focus:border-udsm-blue focus:bg-white focus:ring-2 focus:ring-udsm-blue/20 dark:border-gray-700 dark:bg-gray-800/80 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-sky-400 dark:focus:bg-gray-800 dark:focus:ring-sky-400/20"
                   />
                 </div>
               </div>
 
               <div className="grid gap-8 md:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="ml-1 text-xs font-black uppercase tracking-widest text-gray-400">
+                  <label className="ml-1 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-200">
                     Phone Number
                   </label>
                   <Input
@@ -221,25 +221,25 @@ const Contact = () => {
                     name="phone"
                     placeholder="+255..."
                     required
-                    className="h-14 rounded-xl border-gray-100 bg-gray-50/50 px-6 font-bold dark:border-gray-700 dark:bg-gray-800/50"
+                    className="h-14 rounded-xl border-gray-200 bg-gray-50/70 px-6 font-semibold text-gray-900 placeholder:text-gray-400 focus:border-udsm-blue focus:bg-white focus:ring-2 focus:ring-udsm-blue/20 dark:border-gray-700 dark:bg-gray-800/80 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-sky-400 dark:focus:bg-gray-800 dark:focus:ring-sky-400/20"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="ml-1 text-xs font-black uppercase tracking-widest text-gray-400">
+                  <label className="ml-1 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-200">
                     Organization
                   </label>
                   <Input
                     type="text"
                     name="organization"
                     placeholder="Your Startup/Org"
-                    className="h-14 rounded-xl border-gray-100 bg-gray-50/50 px-6 font-bold dark:border-gray-700 dark:bg-gray-800/50"
+                    className="h-14 rounded-xl border-gray-200 bg-gray-50/70 px-6 font-semibold text-gray-900 placeholder:text-gray-400 focus:border-udsm-blue focus:bg-white focus:ring-2 focus:ring-udsm-blue/20 dark:border-gray-700 dark:bg-gray-800/80 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-sky-400 dark:focus:bg-gray-800 dark:focus:ring-sky-400/20"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="ml-1 text-xs font-black uppercase tracking-widest text-gray-400">
+                <label className="ml-1 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-200">
                   Your Message
                 </label>
                 <Textarea
@@ -247,7 +247,7 @@ const Contact = () => {
                   placeholder="How can we innovate together?"
                   rows={6}
                   required
-                  className="rounded-2xl border-gray-100 bg-gray-50/50 p-6 text-lg font-medium dark:border-gray-700 dark:bg-gray-800/50"
+                  className="rounded-2xl border-gray-200 bg-gray-50/70 p-6 text-base font-medium text-gray-900 placeholder:text-gray-400 focus:border-udsm-blue focus:bg-white focus:ring-2 focus:ring-udsm-blue/20 dark:border-gray-700 dark:bg-gray-800/80 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-sky-400 dark:focus:bg-gray-800 dark:focus:ring-sky-400/20"
                 />
               </div>
 
@@ -288,7 +288,7 @@ const Contact = () => {
           <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-xl sm:p-8 dark:border-gray-800 dark:bg-gray-900">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-forest-green/10 text-forest-green shadow-lg">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-forest-green/10 text-forest-green shadow-lg dark:bg-emerald-500/20 dark:text-emerald-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -311,13 +311,13 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-udsm-gold">
+                  <p className="text-xs font-bold uppercase tracking-[0.15em] text-amber-600 dark:text-amber-400">
                     Find Us
                   </p>
                   <h3 className="text-xl font-black text-gray-900 dark:text-white">
                     Y4C Innovation Lab
                   </h3>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
                     Room B208, UDSM CoICT, Dar es Salaam
                   </p>
                 </div>
@@ -327,7 +327,7 @@ const Contact = () => {
                 href={MAP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-udsm-blue px-6 py-4 font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-forest-green"
+                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-udsm-blue px-6 py-4 font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-forest-green dark:bg-blue-600 dark:hover:bg-emerald-600"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
