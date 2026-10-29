@@ -21,10 +21,10 @@ const TeamMember = ({
         <img
           className="w-full h-full rounded-2xl object-cover shadow-inner"
           alt={`Photo of ${name}`}
-          src={profilePicture || "/Images/y4c-graduation/IMG_0008.JPG"}
+          src={profilePicture || "/Images/Photo01.jpg"}
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = "/Images/y4c-graduation/IMG_0008.JPG";
+            e.target.src = "/Images/Photo01.jpg";
           }}
         />
       </motion.div>

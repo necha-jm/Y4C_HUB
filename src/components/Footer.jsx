@@ -148,19 +148,6 @@ const Footer = () => {
                 </p>
             </div>
             <div className="pt-1">
-              <div className="p-3 bg-gradient-to-br from-udsm-blue/20 to-forest-green/20 rounded-xl border border-white/10 backdrop-blur-sm">
-                <p className="text-[10px] font-black text-udsm-gold uppercase mb-1.5 tracking-widest">Weekly Newsletter</p>
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    placeholder="Innovation updates..."
-                    className="bg-black/20 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-udsm-blue w-full"
-                  />
-                  <button className="bg-udsm-blue hover:bg-blue-700 p-1.5 rounded-xl transition-all shadow-lg hover:scale-105 active:scale-95">
-                    <ExternalLink className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>

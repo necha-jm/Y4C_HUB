@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Laptop, BookOpen, Users, Calendar, Video, Star,
   ShieldCheck, UserPlus, Trash2, CheckCircle, RefreshCw, X, Layers, TrendingUp,
-  LogOut, Layout, Settings, Home, Menu, Bell, Building2
+  LogOut, Layout, Settings, Home, Menu, Bell, Building2, QrCode, FileText, Rocket, Coins, BarChart3, Server
 } from 'lucide-react';
 import apiClient from '@/core/apiClient';
 import { toast } from '@/components/ui/use-toast';
@@ -18,6 +18,12 @@ import EventManager from './moderator/EventManager';
 import ExpertManager from './moderator/ExpertManager';
 import LabCommunityGallery from './member/LabCommunityGallery';
 import PartnerReview from './moderator/PartnerReview';
+import ApplicationReview from './moderator/ApplicationReview';
+import EventAttendanceManager from './moderator/EventAttendanceManager';
+import IncubationPipelineManager from './moderator/IncubationPipelineManager';
+import GrantManager from './moderator/GrantManager';
+import ImpactAnalytics from './moderator/ImpactAnalytics';
+import HostingApprovalManager from './moderator/HostingApprovalManager';
 
 const CoordinatorDashboard = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -115,8 +121,14 @@ const CoordinatorDashboard = ({ user, onLogout }) => {
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: Layout },
-    { id: 'projects', label: 'Projects', icon: Layers },
-    { id: 'events', label: 'Events', icon: Calendar },
+    { id: 'hosting', label: 'Server Hosting Approvals', icon: Server },
+    { id: 'applications', label: 'Cohort Admissions', icon: FileText },
+    { id: 'attendance', label: 'Event Attendance', icon: QrCode },
+    { id: 'pipeline', label: 'Incubation Pipeline', icon: Rocket },
+    { id: 'grants', label: 'Seed Grants', icon: Coins },
+    { id: 'impact', label: 'M&E Impact', icon: BarChart3 },
+    { id: 'projects', label: 'Projects Review', icon: Layers },
+    { id: 'events', label: 'Events Manager', icon: Calendar },
     { id: 'experts', label: 'Experts', icon: Users },
     { id: 'partners', label: 'Partners', icon: Building2 },
     { id: 'gallery', label: 'Lab Gallery', icon: BookOpen },
@@ -125,6 +137,12 @@ const CoordinatorDashboard = ({ user, onLogout }) => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'hosting': return <HostingApprovalManager />;
+      case 'applications': return <ApplicationReview />;
+      case 'attendance': return <EventAttendanceManager />;
+      case 'pipeline': return <IncubationPipelineManager />;
+      case 'grants': return <GrantManager />;
+      case 'impact': return <ImpactAnalytics />;
       case 'projects': return <ProjectReview role="coordinator" />;
       case 'events': return <EventManager role="coordinator" />;
       case 'experts': return <ExpertManager />;

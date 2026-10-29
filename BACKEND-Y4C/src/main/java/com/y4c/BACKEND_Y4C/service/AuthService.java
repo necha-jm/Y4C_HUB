@@ -37,7 +37,12 @@ public class AuthService {
         user.setProgram(request.getProgram());
         user.setYearOfStudy(request.getYearOfStudy());
         user.setUniversity(request.getUniversity());
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        // Send registration confirmation email to user's registered address
+        emailService.sendRegistrationConfirmationNotification(savedUser.getEmail(), savedUser.getName());
+
+        return savedUser;
     }
 
     public User login(LoginRequest request) {

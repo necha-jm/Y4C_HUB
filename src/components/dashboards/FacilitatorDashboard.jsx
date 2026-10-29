@@ -21,6 +21,10 @@ import LandingPageEditor from './moderator/LandingPageEditor';
 import RequestQueue from './moderator/RequestQueue';
 import HcdAdminDashboard from './moderator/hcd/HcdAdminDashboard';
 import LabCommunityGallery from './member/LabCommunityGallery';
+import EquipmentManager from './moderator/EquipmentManager';
+import ContactInquiriesManager from './moderator/ContactInquiriesManager';
+import ApplicationReview from './moderator/ApplicationReview';
+import CertificateGenerator from './moderator/CertificateGenerator';
 
 const FacilitatorDashboard = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -54,6 +58,10 @@ const FacilitatorDashboard = ({ user, onLogout }) => {
     { id: 'landing', label: 'Landing Page', icon: Monitor, color: 'text-pink-500' },
     { id: 'requests', label: 'Requests', icon: MessageSquare, color: 'text-indigo-500' },
     { id: 'gallery', label: 'Lab Gallery', icon: ShieldCheck, color: 'text-udsm-blue' },
+    { id: 'equipment', label: 'Equipment & Space', icon: Layers, color: 'text-udsm-blue' },
+    { id: 'inquiries', label: 'Public Inquiries', icon: MessageSquare, color: 'text-udsm-blue' },
+    { id: 'applications', label: 'Cohort Admissions', icon: FileText, color: 'text-udsm-gold' },
+    { id: 'certificates', label: 'Credentials Generator', icon: ShieldCheck, color: 'text-udsm-gold' },
     { id: 'members', label: 'Members', icon: UserPlus, color: 'text-udsm-blue' },
     { id: 'events', label: 'Events', icon: Calendar, color: 'text-pink-500' },
     { id: 'projects', label: 'Projects', icon: Layers, color: 'text-udsm-gold' },
@@ -66,6 +74,10 @@ const FacilitatorDashboard = ({ user, onLogout }) => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'equipment': return <EquipmentManager />;
+      case 'inquiries': return <ContactInquiriesManager />;
+      case 'applications': return <ApplicationReview />;
+      case 'certificates': return <CertificateGenerator />;
       case 'members': return <MemberManagement role="facilitator" />;
       case 'events': return <EventManager role="facilitator" />;
       case 'timetable': return <TimetableManager role="facilitator" />;

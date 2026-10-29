@@ -22,11 +22,13 @@ import OurTeam from '@/pages/OurTeam';
 import ProjectApplication from '@/pages/ProjectApplication';
 import ContactPage from '@/pages/ContactPage';
 import PartnerRegistration from '@/pages/PartnerRegistration';
+import PartnersPage from '@/pages/PartnersPage';
 import { Toaster } from '@/components/ui/toaster';
 import ScrollToTop from '@/components/ScrollToTop';
 import FloatingShapes from '@/components/FloatingShapes';
 import FeedbackWidget from '@/components/hcd/FeedbackWidget';
 import ThemeConfig from '@/components/ThemeConfig';
+import DemoRoleSwitcher from '@/components/common/DemoRoleSwitcher';
 
 import { AuthService } from '@/core/services/AuthService';
 
@@ -46,7 +48,6 @@ const MainLayout = ({ onLoginClick, isAuthenticated }) => (
         <LabGallerySection />
         <Resources />
         <Startups />
-        <Collaboration />
         <Impact />
       </main>
       <Footer />
@@ -98,6 +99,7 @@ function App() {
         <FloatingShapes />
         <ScrollToTop />
         <FeedbackWidget />
+        <DemoRoleSwitcher />
         <Routes>
           <Route path="/" element={<MainLayout onLoginClick={() => setShowLogin(true)} isAuthenticated={isAuthenticated} />} />
           <Route path="/program/:id" element={<ProgramDetail />} />
@@ -107,6 +109,8 @@ function App() {
           <Route path="/register/:eventId" element={<EventRegister />} />
           <Route path="/propose" element={<ProjectApplication />} />
           <Route path="/register-partner" element={<PartnerRegistration />} />
+          <Route path="/partners" element={<PartnersPage />} />
+          <Route path="/partner" element={<PartnersPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/our-team" element={<OurTeam />} />
           <Route path="/dashboard" element={

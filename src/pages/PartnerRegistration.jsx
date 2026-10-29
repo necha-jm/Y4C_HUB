@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Building2, Globe, Mail, Phone, User, Send, CheckCircle, ArrowLeft } from 'lucide-react';
+import { Building2, Globe, Mail, Phone, User, Send, MapPin, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -32,13 +32,9 @@ const countries = [
   { name: "Japan", flag: "🇯🇵" },
   { name: "Canada", flag: "🇨🇦" },
   { name: "Australia", flag: "🇦🇺" },
-  { name: "Brazil", flag: "🇧🇷" },
   { name: "Norway", flag: "🇳🇴" },
   { name: "Sweden", flag: "🇸🇪" },
   { name: "Netherlands", flag: "🇳🇱" },
-  { name: "Italy", flag: "🇮🇹" },
-  { name: "Spain", flag: "🇪🇸" },
-  { name: "South Korea", flag: "🇰🇷" },
   { name: "Other", flag: "🌍" }
 ].sort((a, b) => a.name === "Tanzania" ? -1 : b.name === "Tanzania" ? 1 : a.name.localeCompare(b.name));
 
@@ -52,6 +48,9 @@ const PartnerRegistration = () => {
     phone: '',
     country: '',
     partnerType: 'CORPORATE',
+    website: '',
+    location: '',
+    description: '',
     collaborationGoal: '',
     logoUrl: ''
   });
@@ -63,10 +62,10 @@ const PartnerRegistration = () => {
     try {
       await apiClient.post('/public/partners/register', formData);
       toast({
-        title: "Request Submitted! 🤝",
-        description: "Your partnership request has been sent to our coordinator. We will contact you soon.",
+        title: "Partnership Request Submitted! 🤝",
+        description: "Your partnership request has been sent to our coordinator. A confirmation email was sent to " + (formData.email || "your registered email") + ".",
       });
-      navigate('/');
+      navigate('/partners');
     } catch (error) {
       toast({
         title: "Submission Failed",
@@ -104,69 +103,87 @@ const PartnerRegistration = () => {
                <p className="text-blue-100 mt-4 font-medium max-w-xl mx-auto italic">"Uniting institutions, industry leaders, and communities to accelerate youth-led innovation in Africa."</p>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-10 md:p-16 space-y-10">
+            <form onSubmit={handleSubmit} className="p-10 md:p-16 space-y-8">
+              {/* Institutional Name & Partnership Category */}
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Institutional Name</label>
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Institutional Name *</label>
                   <div className="relative">
                     <Input
                       required
                       value={formData.institutionName}
                       onChange={(e) => setFormData({...formData, institutionName: e.target.value})}
-                      placeholder="e.g. Tech Corp Africa"
+                      placeholder="e.g. University of Dar es Salaam / Tech Corp"
                       className="h-14 rounded-xl pl-12 bg-gray-50/50 border-none font-bold"
                     />
                     <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                   </div>
                 </div>
+
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Contact Person</label>
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Partnership Category *</label>
+                  <select
+                    className="w-full h-14 rounded-xl px-4 bg-gray-50/50 border-none font-bold outline-none focus:ring-2 focus:ring-udsm-blue dark:text-white"
+                    value={formData.partnerType}
+                    onChange={(e) => setFormData({...formData, partnerType: e.target.value})}
+                  >
+                    <option value="ACADEMIC">Academic Institution / University</option>
+                    <option value="DEVELOPMENT">Development Partner / NGO</option>
+                    <option value="HEALTH">Health & Community Partner</option>
+                    <option value="CORPORATE">Corporate / Industry Leader</option>
+                    <option value="INTERNATIONAL">International Innovation Network</option>
+                    <option value="COMMUNITY">Community Organization</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Institutional Overview & Description *</label>
+                <Textarea
+                  required
+                  value={formData.description}
+                  onChange={(e) => setFormData({...formData, description: e.target.value})}
+                  placeholder="Provide a brief overview of your organization, mission, and key operations..."
+                  className="rounded-2xl bg-gray-50/50 border-none p-6 font-medium text-base min-h-[120px]"
+                />
+              </div>
+
+              {/* Website & Physical Location */}
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Official Website URL</label>
+                  <div className="relative">
+                    <Input
+                      type="url"
+                      value={formData.website}
+                      onChange={(e) => setFormData({...formData, website: e.target.value})}
+                      placeholder="https://www.institution.org"
+                      className="h-14 rounded-xl pl-12 bg-gray-50/50 border-none font-bold"
+                    />
+                    <Globe className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Physical Location / Address *</label>
                   <div className="relative">
                     <Input
                       required
-                      value={formData.contactPerson}
-                      onChange={(e) => setFormData({...formData, contactPerson: e.target.value})}
-                      placeholder="Full Name"
+                      value={formData.location}
+                      onChange={(e) => setFormData({...formData, location: e.target.value})}
+                      placeholder="e.g. Dar es Salaam, Tanzania"
                       className="h-14 rounded-xl pl-12 bg-gray-50/50 border-none font-bold"
                     />
-                    <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                   </div>
                 </div>
               </div>
 
+              {/* Country & Contact Person */}
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Work Email</label>
-                  <div className="relative">
-                    <Input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({...formData, email: e.target.value})}
-                      placeholder="partner@institution.com"
-                      className="h-14 rounded-xl pl-12 bg-gray-50/50 border-none font-bold"
-                    />
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Phone Number</label>
-                  <div className="relative">
-                    <Input
-                      required
-                      value={formData.phone}
-                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      placeholder="+255..."
-                      className="h-14 rounded-xl pl-12 bg-gray-50/50 border-none font-bold"
-                    />
-                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Country</label>
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Country *</label>
                   <div className="relative">
                     <select
                       required
@@ -184,32 +201,67 @@ const PartnerRegistration = () => {
                     <Globe className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
                   </div>
                 </div>
+
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Partnership Type</label>
-                  <select
-                    className="w-full h-14 rounded-xl px-4 bg-gray-50/50 border-none font-bold outline-none focus:ring-2 focus:ring-udsm-blue"
-                    value={formData.partnerType}
-                    onChange={(e) => setFormData({...formData, partnerType: e.target.value})}
-                  >
-                    <option value="CORPORATE">Corporate Partner</option>
-                    <option value="ACADEMIC">Academic Institution</option>
-                    <option value="INTERNATIONAL">International Network</option>
-                    <option value="COMMUNITY">Community Organization</option>
-                  </select>
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Contact Representative *</label>
+                  <div className="relative">
+                    <Input
+                      required
+                      value={formData.contactPerson}
+                      onChange={(e) => setFormData({...formData, contactPerson: e.target.value})}
+                      placeholder="Full Name & Position"
+                      className="h-14 rounded-xl pl-12 bg-gray-50/50 border-none font-bold"
+                    />
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  </div>
                 </div>
               </div>
 
+              {/* Work Email & Phone */}
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Official Work Email *</label>
+                  <div className="relative">
+                    <Input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      placeholder="partner@institution.org"
+                      className="h-14 rounded-xl pl-12 bg-gray-50/50 border-none font-bold"
+                    />
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Phone Number *</label>
+                  <div className="relative">
+                    <Input
+                      required
+                      value={formData.phone}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      placeholder="+255..."
+                      className="h-14 rounded-xl pl-12 bg-gray-50/50 border-none font-bold"
+                    />
+                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Collaboration Goal */}
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Collaboration Goal</label>
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Collaboration Goal & Scope *</label>
                 <Textarea
                   required
                   value={formData.collaborationGoal}
                   onChange={(e) => setFormData({...formData, collaborationGoal: e.target.value})}
-                  placeholder="Tell us how you would like to work with the Y4C Lab..."
-                  className="rounded-2xl bg-gray-50/50 border-none p-6 font-medium text-lg min-h-[150px]"
+                  placeholder="Describe how your organization would like to collaborate with Y4C Innovation Lab..."
+                  className="rounded-2xl bg-gray-50/50 border-none p-6 font-medium text-base min-h-[140px]"
                 />
               </div>
 
+              {/* Institutional Logo */}
               <div className="space-y-4">
                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1 block">Institutional Logo (Optional)</label>
                 <div className="bg-gray-50/50 p-6 rounded-3xl border-2 border-dashed border-gray-100">

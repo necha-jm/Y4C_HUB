@@ -5,6 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
 
+import apiClient from '@/core/apiClient';
+
+const MAP_LINK = 'https://www.google.com/maps?q=-6.7714228,39.2373848';
+
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
@@ -12,158 +16,342 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate a delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const formData = new FormData(e.target);
+      const data = {
+        name: formData.get('fullName'),
+        email: formData.get('email'),
+        subject: formData.get('subject') || 'General Hub Inquiry',
+        phone: formData.get('phone'),
+        organization: formData.get('organization'),
+        message: formData.get('message')
+      };
 
-    toast({
-      title: "Message Sent! 🚀",
-      description: "Thank you for getting in touch with Y4C Innovation Lab. We'll get back to you shortly.",
-      variant: "success"
-    });
+      await apiClient.post('/contact', data);
 
-    e.target.reset();
-    setIsSubmitting(false);
+      toast({
+        title: 'Message Sent to Y4C Lab! 🚀',
+        description:
+          "Thank you for reaching out. Your inquiry has been routed to our facilitators.",
+        variant: 'success',
+      });
+
+      e.target.reset();
+    } catch (err) {
+      toast({
+        title: 'Submission Failed',
+        description: 'Could not send message. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <section id="contact" className="py-12 md:py-16 px-4 relative overflow-hidden bg-white dark:bg-gray-950">
-      <div className="container mx-auto relative z-10">
-        <div className="text-center max-w-4xl mx-auto mb-16 space-y-6">
+    <section
+      id="contact"
+      className="relative overflow-hidden bg-white px-4 py-12 md:py-16 dark:bg-gray-950"
+    >
+      <div className="container relative z-10 mx-auto">
+        {/* Section Heading */}
+        <div className="mx-auto mb-16 max-w-4xl space-y-6 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl lg:text-5xl font-black text-udsm-blue dark:text-white tracking-tight"
+            className="text-3xl font-black tracking-tight text-udsm-blue md:text-4xl lg:text-5xl dark:text-white"
           >
-            Get In <span className="bg-gradient-to-r from-udsm-blue to-forest-green bg-clip-text text-transparent">Touch</span>
+            Get In{' '}
+            <span className="bg-gradient-to-r from-udsm-blue to-forest-green bg-clip-text text-transparent">
+              Touch
+            </span>
           </motion.h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 font-medium">Have a question or want to collaborate? Send us a message.</p>
+
+          <p className="text-xl font-medium text-gray-600 dark:text-gray-400">
+            Have a question or want to collaborate? Send us a message.
+          </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
-          {/* Contact Details Side */}
+        {/* Contact Details and Form */}
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-3">
+          {/* Contact Details */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="space-y-8"
           >
-            <div className="bg-white/70 dark:bg-gray-900/50 backdrop-blur-xl p-8 rounded-[2.5rem] shadow-xl border border-white/20 dark:border-gray-800">
-              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-6 tracking-tight uppercase">Direct Channels</h3>
+            <div className="rounded-[2rem] border border-gray-100 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-gray-900">
+              <h3 className="mb-6 text-2xl font-black uppercase tracking-tight text-gray-900 dark:text-white">
+                Direct Channels
+              </h3>
 
               <div className="space-y-6">
+                {/* Email */}
                 <a
                   href="mailto:y4c@udsm.ac.tz"
-                  className="group flex items-center gap-4 p-4 rounded-2xl hover:bg-udsm-blue/5 transition-all border border-transparent hover:border-udsm-blue/10"
+                  className="group flex items-center gap-4 rounded-2xl border border-transparent p-4 transition-all hover:border-udsm-blue/10 hover:bg-udsm-blue/5"
                 >
-                  <div className="w-12 h-12 bg-udsm-blue/10 rounded-xl flex items-center justify-center text-udsm-blue group-hover:bg-udsm-blue group-hover:text-white transition-all shadow-lg shadow-blue-100 dark:shadow-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-udsm-blue/10 text-udsm-blue shadow-lg transition-all group-hover:bg-udsm-blue group-hover:text-white">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
                     </svg>
                   </div>
-                  <div>
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Email Us</p>
-                    <p className="font-bold text-gray-900 dark:text-gray-200">y4c@udsm.ac.tz</p>
+
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+                      Email Us
+                    </p>
+                    <p className="break-words font-bold text-gray-900 dark:text-gray-200">
+                      y4c@udsm.ac.tz
+                    </p>
                   </div>
                 </a>
 
-                <div className="group flex items-center gap-4 p-4 rounded-2xl">
-                  <div className="w-12 h-12 bg-forest-green/10 rounded-xl flex items-center justify-center text-forest-green transition-all shadow-lg shadow-green-100 dark:shadow-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                {/* Physical Location */}
+                <div className="flex items-center gap-4 rounded-2xl p-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-forest-green/10 text-forest-green shadow-lg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
                     </svg>
                   </div>
+
                   <div>
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Visit Hub</p>
-                    <p className="font-bold text-gray-900 dark:text-gray-200 text-sm">Room B208, UDSM CoICT</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+                      Visit Hub
+                    </p>
+                    <p className="text-sm font-bold text-gray-900 dark:text-gray-200">
+                      Room B208, UDSM CoICT
+                    </p>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 pt-8 border-t border-gray-100 dark:border-gray-800">
-                <p className="text-[10px] font-black text-udsm-gold uppercase tracking-[0.2em] mb-4">Operational Hours</p>
-                <div className="flex justify-between items-center text-sm font-bold text-gray-600 dark:text-gray-400">
+              {/* Operational Hours */}
+              <div className="mt-8 border-t border-gray-100 pt-8 dark:border-gray-800">
+                <p className="mb-4 text-[10px] font-black uppercase tracking-[0.2em] text-udsm-gold">
+                  Operational Hours
+                </p>
+
+                <div className="flex items-center justify-between gap-3 text-sm font-bold text-gray-600 dark:text-gray-400">
                   <span>Mon - Fri</span>
-                  <span className="text-gray-900 dark:text-white">08:00 - 16:00</span>
+                  <span className="text-gray-900 dark:text-white">
+                    08:00 - 16:00
+                  </span>
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Form Side */}
+          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="lg:col-span-2"
           >
-            <form onSubmit={handleSubmit} className="bg-white/70 dark:bg-gray-900/50 backdrop-blur-xl p-8 md:p-12 rounded-[3rem] shadow-xl space-y-8 border border-white/20 dark:border-gray-800">
-              <div className="grid md:grid-cols-2 gap-8">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-8 rounded-[2rem] border border-gray-100 bg-white p-8 shadow-xl md:p-12 dark:border-gray-800 dark:bg-gray-900"
+            >
+              <div className="grid gap-8 md:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Full Name</label>
-                  <Input type="text" placeholder="Innovation Lead" required className="bg-gray-50/50 dark:bg-gray-800/50 h-14 rounded-xl border-gray-100 dark:border-gray-700 px-6 font-bold" />
+                  <label className="ml-1 text-xs font-black uppercase tracking-widest text-gray-400">
+                    Full Name
+                  </label>
+                  <Input
+                    type="text"
+                    name="fullName"
+                    placeholder="Innovation Lead"
+                    required
+                    className="h-14 rounded-xl border-gray-100 bg-gray-50/50 px-6 font-bold dark:border-gray-700 dark:bg-gray-800/50"
+                  />
                 </div>
+
                 <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
-                  <Input type="email" placeholder="name@y4clab.com" required className="bg-gray-50/50 dark:bg-gray-800/50 h-14 rounded-xl border-gray-100 dark:border-gray-700 px-6 font-bold" />
+                  <label className="ml-1 text-xs font-black uppercase tracking-widest text-gray-400">
+                    Email Address
+                  </label>
+                  <Input
+                    type="email"
+                    name="email"
+                    placeholder="name@y4clab.com"
+                    required
+                    className="h-14 rounded-xl border-gray-100 bg-gray-50/50 px-6 font-bold dark:border-gray-700 dark:bg-gray-800/50"
+                  />
                 </div>
               </div>
-              <div className="grid md:grid-cols-2 gap-8">
+
+              <div className="grid gap-8 md:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Phone Number</label>
-                  <Input type="tel" placeholder="+255..." required className="bg-gray-50/50 dark:bg-gray-800/50 h-14 rounded-xl border-gray-100 dark:border-gray-700 px-6 font-bold" />
+                  <label className="ml-1 text-xs font-black uppercase tracking-widest text-gray-400">
+                    Phone Number
+                  </label>
+                  <Input
+                    type="tel"
+                    name="phone"
+                    placeholder="+255..."
+                    required
+                    className="h-14 rounded-xl border-gray-100 bg-gray-50/50 px-6 font-bold dark:border-gray-700 dark:bg-gray-800/50"
+                  />
                 </div>
+
                 <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Organization</label>
-                  <Input type="text" placeholder="Your Startup/Org" className="bg-gray-50/50 dark:bg-gray-800/50 h-14 rounded-xl border-gray-100 dark:border-gray-700 px-6 font-bold" />
+                  <label className="ml-1 text-xs font-black uppercase tracking-widest text-gray-400">
+                    Organization
+                  </label>
+                  <Input
+                    type="text"
+                    name="organization"
+                    placeholder="Your Startup/Org"
+                    className="h-14 rounded-xl border-gray-100 bg-gray-50/50 px-6 font-bold dark:border-gray-700 dark:bg-gray-800/50"
+                  />
                 </div>
               </div>
+
               <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Your Message</label>
-                <Textarea placeholder="How can we innovate together?" rows={6} required className="bg-gray-50/50 dark:bg-gray-800/50 rounded-2xl border-gray-100 dark:border-gray-700 p-6 font-medium text-lg" />
+                <label className="ml-1 text-xs font-black uppercase tracking-widest text-gray-400">
+                  Your Message
+                </label>
+                <Textarea
+                  name="message"
+                  placeholder="How can we innovate together?"
+                  rows={6}
+                  required
+                  className="rounded-2xl border-gray-100 bg-gray-50/50 p-6 text-lg font-medium dark:border-gray-700 dark:bg-gray-800/50"
+                />
               </div>
+
               <Button
                 type="submit"
                 size="lg"
                 disabled={isSubmitting}
-                className="w-full h-16 bg-gradient-to-r from-udsm-blue to-forest-green hover:from-forest-green hover:to-udsm-blue hover:scale-[1.01] active:scale-[0.98] text-white text-xl font-black rounded-2xl shadow-lg shadow-udsm-blue/20 transition-all flex items-center justify-center gap-3"
+                className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-udsm-blue to-forest-green text-xl font-black text-white shadow-lg shadow-udsm-blue/20 transition-all hover:scale-[1.01] hover:from-forest-green hover:to-udsm-blue active:scale-[0.98]"
               >
                 {isSubmitting ? (
                   <>
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full"
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: 'linear',
+                      }}
+                      className="h-6 w-6 rounded-full border-4 border-white/30 border-t-white"
                     />
                     SENDING...
                   </>
                 ) : (
-                  "SEND MESSAGE"
+                  'SEND MESSAGE'
                 )}
               </Button>
             </form>
           </motion.div>
         </div>
 
-        {/* Map Section */}
+        {/* Location Section (link only, no iframe) */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-20 rounded-[3rem] overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-800 relative z-10"
+          className="mt-16"
         >
-          <div className="bg-white dark:bg-gray-900 p-2">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.987105517626!2d39.23738477415657!3d-6.771422766216459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c4e9e55555555%3A0x31c34ce3703cc9eb!2sCollege%20of%20Information%20and%20Communication%20Technologies%20(CoICT)%20-%20University%20of%20Dar%20es%20salaam!5e0!3m2!1sen!2stz!4v1789728195683!5m2!1sen!2stz"
-              width="100%"
-              height="450"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="strict-origin-when-cross-origin"
-              className="rounded-[2.5rem] grayscale hover:grayscale-0 transition-all duration-700"
-            ></iframe>
+          <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-xl sm:p-8 dark:border-gray-800 dark:bg-gray-900">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-forest-green/10 text-forest-green shadow-lg">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-udsm-gold">
+                    Find Us
+                  </p>
+                  <h3 className="text-xl font-black text-gray-900 dark:text-white">
+                    Y4C Innovation Lab
+                  </h3>
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Room B208, UDSM CoICT, Dar es Salaam
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href={MAP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-udsm-blue px-6 py-4 font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-forest-green"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                View on Google Maps
+              </a>
+            </div>
           </div>
         </motion.div>
       </div>

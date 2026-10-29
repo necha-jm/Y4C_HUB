@@ -67,10 +67,10 @@ const Header = ({ onLoginClick, isAuthenticated, onLogout }) => {
   const programLinks = [
     { name: 'Our Programs', id: 'programs', desc: 'Tech bootcamps & skills' },
     { name: 'Events & Workshops', id: 'events', desc: 'Networking & learning' },
+    { name: 'Our Partners', path: '/partners', desc: 'Sponsors & collaborators' },
     { name: 'Lab Gallery', id: 'gallery', desc: 'Moments & memories' },
     { name: 'Resources & Learning', id: 'resources', desc: 'Guides & tools' },
     { name: 'Startups', id: 'startups', desc: 'Success stories' },
-    { name: 'Collaboration', id: 'collaboration', desc: 'Partnerships' },
     { name: 'Propose Project', path: '/propose', desc: 'Start your journey' },
     { name: 'Impact', id: 'impact', desc: 'Our progress' },
   ];
@@ -151,6 +151,7 @@ const Header = ({ onLoginClick, isAuthenticated, onLogout }) => {
                 </AnimatePresence>
               </div>
 
+              <NavLink onClick={() => navigate('/partners')} active={location.pathname === '/partners' || location.pathname === '/partner' || location.pathname === '/register-partner'}>Partners</NavLink>
               <NavLink onClick={() => navigate('/contact')} active={location.pathname === '/contact'}>Contact</NavLink>
             </div>
 
@@ -247,6 +248,7 @@ const Header = ({ onLoginClick, isAuthenticated, onLogout }) => {
                {[
                  { name: 'Home', id: 'home' },
                  { name: 'About Us', id: 'about' },
+                 { name: 'Partners', path: '/partners' },
                  ...programLinks,
                  { name: 'Contact', path: '/contact' }
                ].map((item, idx) => (

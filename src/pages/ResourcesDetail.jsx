@@ -66,17 +66,30 @@ const ResourcesDetail = () => {
 
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
-                {resource.images.map((img, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.2 + index * 0.15 }}
-                    className="rounded-2xl overflow-hidden shadow-xl"
-                  >
-                    <img className="w-full h-64 object-cover" alt={img} src="/Images/y4c-graduation/IMG_0017.JPG" />
-                  </motion.div>
-                ))}
+                {resource.images.map((img, index) => {
+                  const imgSrc = (typeof img === 'string' && (img.startsWith('http') || img.startsWith('/')))
+                    ? img
+                    : `/Images/Photo0${(index % 4) + 1}.jpg`;
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.2 + index * 0.15 }}
+                      className="rounded-2xl overflow-hidden shadow-xl"
+                    >
+                      <img
+                        className="w-full h-64 object-cover"
+                        alt={typeof img === 'string' ? img : "Resource detail"}
+                        src={imgSrc}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = `/Images/Photo0${(index % 4) + 1}.jpg`;
+                        }}
+                      />
+                    </motion.div>
+                  );
+                })}
               </div>
               <div>
                 <h2 className="text-3xl font-bold text-gray-800 mb-6">Key Features</h2>

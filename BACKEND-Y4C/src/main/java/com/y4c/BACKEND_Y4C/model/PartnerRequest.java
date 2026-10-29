@@ -15,8 +15,13 @@ public class PartnerRequest {
     private String email;
     private String phone;
     private String country;
-    private String partnerType; // CORPORATE, ACADEMIC, INTERNATIONAL, COMMUNITY
+    private String partnerType; // CORPORATE, ACADEMIC, INTERNATIONAL, COMMUNITY, HEALTH, DEVELOPMENT
+    private String website;
+    private String location;
     
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     @Column(columnDefinition = "TEXT")
     private String collaborationGoal;
     
@@ -42,6 +47,12 @@ public class PartnerRequest {
     public void setCountry(String country) { this.country = country; }
     public String getPartnerType() { return partnerType; }
     public void setPartnerType(String partnerType) { this.partnerType = partnerType; }
+    public String getWebsite() { return website; }
+    public void setWebsite(String website) { this.website = website; }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
     public String getCollaborationGoal() { return collaborationGoal; }
     public void setCollaborationGoal(String collaborationGoal) { this.collaborationGoal = collaborationGoal; }
     public String getLogoUrl() { return logoUrl; }

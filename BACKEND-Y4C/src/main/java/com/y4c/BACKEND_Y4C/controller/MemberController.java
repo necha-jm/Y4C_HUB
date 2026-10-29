@@ -4,6 +4,8 @@ import com.y4c.BACKEND_Y4C.model.LabGallery;
 import com.y4c.BACKEND_Y4C.model.Request;
 import com.y4c.BACKEND_Y4C.repository.LabGalleryRepository;
 import com.y4c.BACKEND_Y4C.repository.RequestRepository;
+import com.y4c.BACKEND_Y4C.repository.UserRepository;
+import com.y4c.BACKEND_Y4C.service.EmailService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -15,16 +17,28 @@ public class MemberController {
 
     private final RequestRepository requestRepository;
     private final LabGalleryRepository galleryRepository;
+    private final UserRepository userRepository;
+    private final EmailService emailService;
 
-    public MemberController(RequestRepository requestRepository, LabGalleryRepository galleryRepository) {
+    public MemberController(RequestRepository requestRepository, LabGalleryRepository galleryRepository, UserRepository userRepository, EmailService emailService) {
         this.requestRepository = requestRepository;
         this.galleryRepository = galleryRepository;
+        this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     @PostMapping("/requests")
     public ResponseEntity<Request> submitRequest(@RequestBody Request request) {
         request.setStatus("PENDING");
-        return ResponseEntity.ok(requestRepository.save(request));
+        Request saved = requestRepository.save(request);
+        if (saved.getUserId() != null) {
+            userRepository.findById(saved.getUserId()).ifPresent(user -> {
+                if (user.getEmail() != null && !user.getEmail().trim().isEmpty()) {
+                    emailService.sendRequestSubmittedNotification(user.getEmail(), user.getName(), saved.getSubject());
+                }
+            });
+        }
+        return ResponseEntity.ok(saved);
     }
 
     @GetMapping("/requests/{userId}")

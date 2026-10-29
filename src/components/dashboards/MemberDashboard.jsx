@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   User, Rocket, Award, Heart, Search, BookOpen,
   Layout, Calendar, Layers, MessageSquare, Home, LogOut, TrendingUp, Star, Video,
-  Menu, X, ChevronRight, Bell, Image as ImageIcon
+  Menu, X, ChevronRight, Bell, Image as ImageIcon, Server
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,13 @@ import ProjectSubmission from './common/ProjectSubmission';
 import SupportRequests from './member/SupportRequests';
 import AchievementOrbit from './member/AchievementOrbit';
 import LabCommunityGallery from './member/LabCommunityGallery';
+import EquipmentBooking from './member/EquipmentBooking';
+import IncubatorMilestones from './member/IncubatorMilestones';
+import MentorshipScheduler from './member/MentorshipScheduler';
+import CoFounderBoard from './member/CoFounderBoard';
+import InteractiveLearningPath from './member/InteractiveLearningPath';
+import MyCertificates from './member/MyCertificates';
+import ProjectHostingRequest from './member/ProjectHostingRequest';
 
 const MemberDashboard = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -23,7 +30,13 @@ const MemberDashboard = ({ user, onLogout }) => {
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: Layout },
-    { id: 'learning', label: 'Learning Path', icon: BookOpen },
+    { id: 'hosting', label: 'Cloud Hosting', icon: Server },
+    { id: 'learning', label: 'Curriculum & Quiz', icon: BookOpen },
+    { id: 'equipment', label: 'Equipment & Space', icon: Layers },
+    { id: 'incubation', label: 'Startup Gates', icon: Rocket },
+    { id: 'mentorship', label: 'Book Expert', icon: Video },
+    { id: 'cofounder', label: 'Co-Founders', icon: User },
+    { id: 'certificates', label: 'My Certificates', icon: Award },
     { id: 'gallery', label: 'Lab Gallery', icon: ImageIcon },
     { id: 'schedule', label: 'Schedule', icon: Calendar },
     { id: 'projects', label: 'My Projects', icon: Layers },
@@ -32,49 +45,13 @@ const MemberDashboard = ({ user, onLogout }) => {
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'learning':
-        return (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white dark:bg-gray-900 rounded-[2.5rem] p-10 shadow-xl border border-gray-50 dark:border-gray-800 max-w-5xl mx-auto"
-          >
-            <h2 className="text-2xl font-black mb-10 text-gray-900 dark:text-white flex items-center gap-4">
-              <div className="p-3 bg-udsm-blue/10 rounded-2xl">
-                <BookOpen className="h-7 w-7 text-udsm-blue" />
-              </div>
-              Your Learning Path
-            </h2>
-            <div className="space-y-8">
-              {[
-                { title: 'Intro to React', progress: 100, status: 'Completed', color: 'bg-udsm-blue' },
-                { title: 'UI/UX Design Basics', progress: 45, status: 'In Progress', color: 'bg-udsm-gold' },
-                { title: 'Advanced Backend', progress: 0, status: 'Not Started', color: 'bg-gray-300' },
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-8 group cursor-pointer">
-                  <div className={`w-16 h-16 rounded-[1.5rem] flex items-center justify-center flex-shrink-0 transition-all ${
-                    item.progress === 100 ? 'bg-udsm-blue/10 text-udsm-blue group-hover:scale-110' : 'bg-gray-100 dark:bg-gray-800 text-gray-400'
-                  }`}>
-                    {item.progress === 100 ? <Award className="h-8 w-8" /> : <BookOpen className="h-8 w-8" />}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex justify-between items-center mb-3">
-                      <p className="font-black text-gray-900 dark:text-white text-lg tracking-tight group-hover:text-udsm-blue transition-colors uppercase">{item.title}</p>
-                      <span className="text-[10px] font-black uppercase text-gray-400 tracking-widest">{item.status}</span>
-                    </div>
-                    <div className="h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden shadow-inner">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${item.progress}%` }}
-                        className={`h-full ${item.color} shadow-lg shadow-current/20`}
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        );
+      case 'hosting': return <ProjectHostingRequest user={user} />;
+      case 'learning': return <InteractiveLearningPath user={user} onEarnCertificate={() => setActiveTab('certificates')} />;
+      case 'equipment': return <EquipmentBooking user={user} />;
+      case 'incubation': return <IncubatorMilestones user={user} />;
+      case 'mentorship': return <MentorshipScheduler user={user} />;
+      case 'cofounder': return <CoFounderBoard user={user} />;
+      case 'certificates': return <MyCertificates user={user} />;
       case 'gallery': return <LabCommunityGallery user={user} />;
       case 'schedule': return <TimetableDisplay />;
       case 'projects': return <ProjectSubmission user={user} />;

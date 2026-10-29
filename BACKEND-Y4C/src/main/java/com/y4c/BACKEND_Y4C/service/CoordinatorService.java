@@ -140,7 +140,13 @@ public class CoordinatorService {
         PartnerRequest request = partnerRequestRepository.findById(partnerId)
                 .orElseThrow(() -> new RuntimeException("Partner request not found"));
         request.setStatus("APPROVED");
-        return partnerRequestRepository.save(request);
+        PartnerRequest saved = partnerRequestRepository.save(request);
+
+        if (saved.getEmail() != null && !saved.getEmail().trim().isEmpty()) {
+            emailService.sendPartnerApprovalNotification(saved.getEmail(), saved.getInstitutionName());
+        }
+
+        return saved;
     }
 
     public PartnerRequest publishPartner(Long partnerId) {
@@ -148,7 +154,13 @@ public class CoordinatorService {
                 .orElseThrow(() -> new RuntimeException("Partner request not found"));
         request.setStatus("APPROVED");
         request.setIsPublished(true);
-        return partnerRequestRepository.save(request);
+        PartnerRequest saved = partnerRequestRepository.save(request);
+
+        if (saved.getEmail() != null && !saved.getEmail().trim().isEmpty()) {
+            emailService.sendPartnerApprovalNotification(saved.getEmail(), saved.getInstitutionName());
+        }
+
+        return saved;
     }
 
     public List<PartnerRequest> getPublishedPartners() {
@@ -161,6 +173,12 @@ public class CoordinatorService {
 
     public PartnerRequest submitPartnerRequest(PartnerRequest request) {
         request.setStatus("PENDING");
-        return partnerRequestRepository.save(request);
+        PartnerRequest saved = partnerRequestRepository.save(request);
+
+        if (saved.getEmail() != null && !saved.getEmail().trim().isEmpty()) {
+            emailService.sendPartnerRequestSubmissionNotification(saved.getEmail(), saved.getInstitutionName());
+        }
+
+        return saved;
     }
 }
